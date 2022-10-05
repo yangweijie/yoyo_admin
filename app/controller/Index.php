@@ -8,7 +8,6 @@ class Index extends BaseController
 {
     public function index()
     {
-        // return function_exists('Yoyo\yoyo_scripts')? 'exists':'not exist';
         return View::fetch();
     }
 
