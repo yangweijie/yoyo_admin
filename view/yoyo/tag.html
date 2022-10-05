@@ -1,0 +1,9 @@
+ <span
+  class="px-4 py-2 rounded-full text-gray-500 {if $outline} border border-gray-300{else/} bg-gray-200 {/if}font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+  {$text}
+  {if $icon}
+  <button class="bg-transparent hover focus:outline-none" data-name="{$data? $data:$text}">
+    {$icon|raw}
+  </button>
+  {/if}
+</span>

@@ -1,0 +1,24 @@
+<div class="{if $horizontal}flex flex-col md:flex-row md:max-w-xl{else /}block  max-w-sm text-center{/if}  rounded-lg shadow-lg bg-white ">
+  {if $header}
+  <div class="py-3 px-6 border-b border-gray-300">
+    {$header}
+  </div>
+  {/if}
+  {$img|raw}
+  <div class="p-6 {$horizontal?'flex flex-col justify-start':''}">
+    <h5 class="text-gray-900 text-xl font-medium mb-2">{$title}</h5>
+    {if strpos($content, '<p') === false}
+    <p class="text-gray-700 text-base mb-4">
+    {$content}
+    </p>
+    {else /}
+    {$content}
+    {/if}
+    {$button}
+  </div>
+  {if $footer}
+  <div class="py-3 px-6 border-t border-gray-300 text-gray-600">
+    {$footer}
+  </div>
+  {/if}
+</div>

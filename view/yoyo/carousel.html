@@ -1,0 +1,53 @@
+<div id="{$id}" class="carousel slide relative {if $fade} carousel-fade{/if} {if $dark} carousel-dark{/if}" data-bs-ride="carousel">
+  {if $indicators}
+  <div class="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
+    {volist name="imgs" id="img"}
+    <button
+      type="button"
+      data-bs-target="#{$id}"
+      data-bs-slide-to="{$key}"
+      class="{if $key==0}active{/if}"
+      aria-current="true"
+      aria-label="Slide {$i}"
+    ></button>
+    {/volist}
+  </div>
+  {/if}
+  <div class="carousel-inner relative w-full overflow-hidden">
+    {volist name="imgs" id="img"}
+    <div class="carousel-item {if $key==0}active{/if} relative float-left w-full">
+      <img
+        src="{$img.src|raw}"
+        class="block w-full"
+        alt="{$img.alt}"
+      />
+      {if $img.label || $img.placeholder}
+      <div class="carousel-caption hidden md:block absolute text-center">
+        <h5 class="text-xl">{$img.label}</h5>
+        <p>{$img.placeholder}</p>
+      </div>
+      {/if}
+    </div>
+    {/volist}
+  </div>
+  {if $control}
+  <button
+    class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+    type="button"
+    data-bs-target="#{$id}"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+    type="button"
+    data-bs-target="#{$id}"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+  {/if}
+</div>

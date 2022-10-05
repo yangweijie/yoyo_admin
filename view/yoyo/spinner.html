@@ -1,0 +1,5 @@
+<div class="flex {if $showText}items-center justify-center{else /}justify-center items-center{/if}">
+  <div class="{if $type == 'grow'}spinner-grow bg-current opacity-0 {else /}spinner-border animate-spin border-4 {/if}inline-block w-{$w} h-{$h} rounded-full {$color}" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>

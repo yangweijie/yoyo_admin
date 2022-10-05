@@ -1,0 +1,22 @@
+<div class="relative pt-1">
+  <label for="{$id}" class="form-label">{$label}</label>
+  <input
+    type="range"
+    class="
+      form-range
+      appearance-none
+      w-full
+      h-6
+      p-0
+      bg-transparent
+      focus:outline-none focus:ring-0 focus:shadow-none
+    "
+    min="{$min}"
+    max="{$max}"
+    step="{$step}"
+    id="{$id}"
+    name="{$name}"
+    value="{$value|default=0}"
+    {if $disabled}disabled{/if}
+  />
+</div>

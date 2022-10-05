@@ -1,0 +1,124 @@
+<div>
+    <div class="{$pos} relative">
+    	{if is_array($btn)}{:Yoyo\\yoyo_render('button', $btn)}{else /}{$btn|raw}{/if}
+    	<ul class="
+    		hidden
+    		dropdown-menu
+			text-sm
+			py-2
+			px-4
+			font-normal
+			block
+			w-full
+			whitespace-nowrap
+			bg-transparent
+			{if $dark}
+			text-gray-300 
+			hover:bg-gray-700 
+			hover:text-white 
+			focus:text-white 
+			focus:bg-gray-700
+			{else /}
+			text-gray-700
+			hover:bg-gray-100
+			{/if}
+    	" aria-labelledby="{$id}Button">
+			{if $header}
+				{if stripos($header, '<') === false}
+				<h6
+		          class="
+		            text-gray-500
+		            font-semibold
+		            text-sm
+		            py-2
+		            px-4
+		            block
+		            w-full
+		            whitespace-nowrap
+		            bg-transparent
+		          "
+		        >
+		          {$header}
+		        </h6>
+				{else /}
+				{$header|raw}
+				{/if}
+			{/if}
+			{volist name="items" id="item"}
+			{switch item.type}
+			    {case disable}
+			    <li>
+		          <a
+		            class="
+		              dropdown-item
+		              text-sm
+		              py-2
+		              px-4
+		              font-normal
+		              block
+		              w-full
+		              whitespace-nowrap
+		              bg-transparent
+		              text-gray-400
+		              pointer-events-none
+		            "
+		            href="#"
+		            >{$item.text}</a
+		          >
+		        </li>
+			    {/case}
+			    {case divider}
+			    <hr class="h-0 my-2 border border-solid border-t-0 border-gray-700 opacity-25" />
+			    {/case}
+			    {case text}
+			    <span
+		          class="
+		            text-sm
+		            py-2
+		            px-4
+		            font-normal
+		            block
+		            w-full
+		            whitespace-nowrap
+		            bg-transparent
+		            text-gray-700
+		          "
+		          >{$item.text}</span
+		        >
+			    {/case}
+			    {default /}
+			    <li>
+		          <a
+		            class="
+						dropdown-item
+						text-sm
+						py-2
+						px-4
+						font-normal
+						block
+						w-full
+						whitespace-nowrap
+						bg-transparent
+						{if $dark}
+						text-gray-300 
+						hover:bg-gray-700 
+						hover:text-white 
+						focus:text-white 
+						focus:bg-gray-700 
+						active:bg-blue-600
+		              	{else /}
+		              	text-gray-700
+		              	hover:bg-gray-100
+		              	{/if}
+		            "
+		            href="{$item.href|default='#'}"
+		            >{$item.text|default=$item.type}</a
+		          >
+		        </li>
+			{/switch}
+
+			{/volist}
+    		<li></li>
+    	</ul>
+    </div>
+</div>

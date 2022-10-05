@@ -1,0 +1,38 @@
+<div class="p-4">
+  <ul class="{$ul_class} nav nav-tabs flex flex-col flex-wrap list-none border-b-0 pl-0 mb-4" id="{$id}-tab"
+    role="tablist">
+    {volist name="items" id="item"}
+    <li class="nav-item {$li_class}" role="presentation">
+      <a href="#{$id}-{$i}" class="
+        nav-link
+        block
+        font-medium
+        text-xs
+        leading-tight
+        uppercase
+        border-x-0 border-t-0 border-b-2 border-transparent
+        px-6
+        py-3
+        my-2
+        hover:border-transparent hover:bg-gray-100
+        focus:border-transparent
+        {if $key == $active}
+        active
+        {/if}
+        {if $item.disabled}
+        disabled
+        pointer-events-none
+        {/if}
+      " id="{$id}-{$i}-tab" data-bs-toggle="pill" data-bs-target="#{$id}-{$i}" role="tab" aria-controls="{$id}-{$i}"
+        aria-selected="true">{$item.title}</a>
+    </li>
+    {/volist}
+  </ul>
+  <div class="tab-content" id="{$id}-tabContent">
+    {volist name="items" id="item"}
+    <div class="tab-pane fade {if $key == $active}show active{/if}" id="{$id}-{$i}" role="tabpanel" aria-labelledby="{$id}-{$i}-tab">
+      {$item.content|raw}
+    </div>
+    {/volist}
+  </div>
+</div>
