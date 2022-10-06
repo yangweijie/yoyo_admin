@@ -12,6 +12,8 @@ use think\Validate;
  */
 abstract class BaseController
 {
+    use \liliuwei\think\Jump;
+    
     /**
      * Request实例
      * @var \think\Request
@@ -90,5 +92,6 @@ abstract class BaseController
 
         return $v->failException(true)->check($data);
     }
+
 
 }

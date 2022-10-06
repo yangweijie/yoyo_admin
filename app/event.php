@@ -7,6 +7,7 @@ return [
     'listen'    => [
         'AppInit'  => [],
         'HttpRun'  => [
+            'app\\listener\\Init',
             'app\\listener\\YoyoInit',
         ],
         'HttpEnd'  => [],

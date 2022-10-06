@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{block name="title"}{$title|default='title'}{/block}</title>
+	{:Yoyo\\yoyo_scripts()}
+	<link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind Elements CSS -->
+    <link rel="stylesheet" href="/static/tw/css/index.min.css" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	{block name="style"}{/block}
+	<script>
+	  tailwind.config = {
+	    theme: {
+	      extend: {
+	        fontFamily: {
+	          sans: ['Inter', 'sans-serif'],
+	        },
+	      }
+	    }
+	  }
+	</script>
+</head>
+<body>
+	{block name="nav"}
+	{include file="public/nav"}
+	{/block}
+
+	{block name="sidebar"}
+	{include file="public/sidebar"}
+	{/block}
+
+
+	<!-- Start your project here-->
+    <div class="mx-96">
+	{block name="content"}
+	{/block}
+    </div>
+    <!-- End your project here-->
+
+
+
+	{load href="/static/tw/js/index.min.js" /}
+
+	<script type="text/javascript">
+    var datepickerTranslated = document.querySelector('.datepicker-translated');
+    if(datepickerTranslated){
+	    new window.Datepicker(datepickerTranslated, {
+		    title: '日期选择',
+		    monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
+		    '十月', '十一月', '十二月'],
+		    monthsShort: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11','12'],
+		    weekdaysFull: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+		    weekdaysShort: ['日', '一', '二', '三', '四', '五', '六'],
+		    weekdaysNarrow: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
+		    okBtnText: 'Ok',
+		    clearBtnText: '清除',
+		    cancelBtnText: '取消',
+	    });
+    }
+</script>
+
+	{block name="script"}{/block}
+</body>
+</html>

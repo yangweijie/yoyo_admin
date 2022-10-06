@@ -1,8 +1,9 @@
 <?php
-namespace app\controller;
+namespace app\index\controller;
 
 use app\BaseController;
 use think\facade\View;
+use Clickfwd\Yoyo\Yoyo as yoyoClass;
 
 class Index extends BaseController
 {
@@ -14,5 +15,9 @@ class Index extends BaseController
     public function hello($name = 'ThinkPHP6')
     {
         return 'hello,' . $name;
+    }
+
+    public function yoyo(){
+        return (yoyoClass::getInstance())->update();
     }
 }

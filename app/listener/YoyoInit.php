@@ -24,10 +24,10 @@ class YoyoInit
     {
         $yoyo = new Yoyo();
         $yoyo->configure([
-          'url'         => '/yoyo',
-          'scriptsPath' => 'static/js/',
+          'url'         => '/index.php/index/yoyo',
+          'scriptsPath' => '/static/js/',
           'namespace'   => 'app\\yoyo\\',
-          'htmx'        => 'static/js/htmx.js',
+          'htmx'        => '/static/js/htmx.js',
           'viewPath'    => self::getComponentPath(),
         ]);
 

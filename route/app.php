@@ -18,6 +18,6 @@ Route::get('think', function () {
 
 Route::get('hello/:name', 'index/hello');
 
-Route::any('yoyo', function () {
-    return (yoyoClass::getInstance())->update();
-});
+// Route::any('yoyo', function () {
+//     return (yoyoClass::getInstance())->update();
+// });

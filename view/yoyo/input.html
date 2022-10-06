@@ -1,5 +1,7 @@
 <div class="form-floating mb-3 xl:w-96">
-  	<input type="{$type}" class="form-control
+  	<input type="{$type}" 
+      name="{$name}"
+      class="form-control
       block
       w-full
       px-3
@@ -13,6 +15,6 @@
       transition
       ease-in-out
       m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="{$id}" placeholder value="{$value}" {if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if}/>
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="{$id}" placeholder value="{$value}" {if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if} yoyo:post="render" />
   	<label for="{$id}" class="text-gray-700">{$label}</label>
 </div>

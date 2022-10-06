@@ -17,7 +17,7 @@ class Button extends Component
 	public $ripple      = false;
 	public $outline     = false;
 	public $disabled    = false;
-	public $extra_attrs = [];
+	public $extra_attrs = '';
 
 	private $types = [
 		'primary'   => ['bg-blue-600', 'text-white', 'border-2 border-blue-600', 'text-blue-600'],
@@ -34,7 +34,7 @@ class Button extends Component
 	protected $props = ['text', 'color'];
 
 	public function getSizeClassProperty(){
-		return $this->sizes[$this->size];
+		return $this->sizes[$this->size]?? $this->size;
 	}
 
 	public function getBgColorProperty()
@@ -47,14 +47,19 @@ class Button extends Component
 		return $this->types[$this->color][$this->outline ? 3:1]?:'text-white';
 	}
 
+	public function getHoverColorProperty()
+	{
+		return stripos($this->bg_color, '0') === false ? 'bg-transparent': substr($this->bg_color, 0, strpos($this->bg_color, '-', 4));
+	}
 
 	public function render()
 	{
 		return (String) $this->view('button', [
-			'id'         => $this->getComponentId(),
-			'size_class' => $this->size_class,
-			'bg_color'   => $this->bg_color,
-			'text_color' => $this->text_color,
+			'id'          => $this->getComponentId(),
+			'size_class'  => $this->size_class,
+			'bg_color'    => $this->bg_color,
+			'text_color'  => $this->text_color,
+			'hover_color' => $this->hover_color,
 		]);
 	}
 }
