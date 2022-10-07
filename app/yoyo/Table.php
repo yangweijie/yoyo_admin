@@ -21,6 +21,7 @@ class Table extends Component
 	public $customActions = [];
 	public $search        = false;
 	public $checkble      = true;
+	public $check         = 1;
 	public $checked       = [];
 	public $checkSort     = SORT_NUMERIC;
 	public $pk            = 'id';
@@ -28,8 +29,11 @@ class Table extends Component
 	public $map           = [];
 	public $list_rows     = 0; // -1 表示不分页
 	public $paginate      = null;
+	public $request       = null;
+	public $props         = ['data', 'checked'];
 
 	public function mount(){
+		$this->request = request();
 		if(empty($this->model) && empty($this->data)){
 			throw new \Exception("数据未空");
 		}
@@ -68,9 +72,9 @@ class Table extends Component
 	}
 
 	public function getActionProperty(){
-		if(empty($this->model)){
-			return false;
-		}
+		// if(empty($this->model)){
+		// 	return false;
+		// }
 		return $this->edit || $this->delete || $this->customActions;
 	}
 
@@ -98,7 +102,11 @@ class Table extends Component
 			}
 		}else{
 			no_model:
-			$columns = array_keys($this->data[0]);
+			if(is_string($this->data[0])){
+				$columns = array_keys(json_decode($this->data[0], true));
+			}else{
+				$columns = array_keys($this->data[0]);
+			}
 			foreach ($columns as $key => $column) {
 				$ret[] = ['name'=>$column, 'type'=>'text'];
 			}
@@ -111,25 +119,41 @@ class Table extends Component
 			$ret = [];
 
 		}else{
+			$ret = [];
+			foreach ($this->data as $key => $value) {
+				if(is_string($value)){
+					$ret[] = json_decode($value, true);
+				}else{
+					$ret[] = $value;
+				}
+			}
+			$this->data = $ret;
 			return $this->data;
 		}
 	}
 
 	// 交互check
-	public function checkToggle($key){
-		if(in_array($this->checked, $key)){
+	public function checkToggle($key = ''){
+		if(in_array($key, $this->checked)){
 			unset($this->checked[array_search($key, $this->checked)]);
 		}else{
 			$this->checked[] = $key;
 		}
 		sort($this->checked, $this->checkSort);
+		if(count($this->checked) == count($this->render_data)){
+			$this->check = 0;
+		}else{
+			$this->check = 1;
+		}
 	}
 
-	public function checkAll($check = true){
+	public function checkAll($check = 1){
 		if($check){
-			$this->checked = array_column($this->data, $this->pk);
+			$this->checked = array_column($this->render_data, $this->pk);
+			$this->check   = 0;
 		}else{
 			$this->checked = [];
+			$this->check   = 1;
 		}
 	}
 

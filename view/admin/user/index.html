@@ -7,10 +7,14 @@
 {block name="content"}
 
 <div class="">
-      {:Yoyo\\yoyo_render('table', ['data'=>[
-            ['id'=>1, 'title'=>111],
-            ['id'=>2, 'title'=>111],
-      ]])}
+      {:Yoyo\\yoyo_render('table', [
+            'data'=>[
+                  ['id'=>1, 'title'=>111],
+                  ['id'=>2, 'title'=>111],
+            ],
+            'edit'   => true,
+            'delete' => true,
+      ])}
 </div>
 
 {/block}
