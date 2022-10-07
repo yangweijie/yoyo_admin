@@ -5,23 +5,23 @@ namespace app\yoyo;
 use Clickfwd\Yoyo\Component;
 use app\admin\model\Attachment;
 
-class File extends Component
+class Image extends Component
 {
 	
-	public $label  = '文件';
-	public $value  = 0;
-	public $name   = 'file';
-	public $error  = '';
-	public $from   = '';
-	public $module = 'admin';
-	public $originalName = '';
+	public $label   = '图片';
+	public $value   = 0;
+	public $name    = 'pic';
+	public $error   = '';
+	public $from    = '';
+	public $module  = 'admin';
+	public $preview = '';
 	public $request = null;
 
 	public function mount(){
 		$this->request = request();
 	}
 
-	public function getUploadedProperty($dir = 'file'){
+	public function getUploadedProperty($dir = 'images'){
 		// 附件大小限制
         $size_limit = $dir == 'images' ? config('app.upload_image_size') : config('app.upload_file_size');
         $size_limit = $size_limit * 1024;
@@ -35,6 +35,7 @@ class File extends Component
         $file_input_name = $this->name;
         $file            = $this->request->file($file_input_name);
         if($file){
+
 	        // 判断附件大小是否超过限制
 	        if ($size_limit > 0 && ($file->getInfo('size') > $size_limit)) {
 	            $this->error = '附件过大';
@@ -70,8 +71,8 @@ class File extends Component
 	                $file_path = $file_exists['path'];
 	            }
 	       		
-	       		$this->value        = $file_exists['id'];
-	       		$this->originalName = $file_exists['name'];
+	       		$this->value   = $file_exists['id'];
+	       		$this->preview = $file_path;
 	            return true;
 	        }
 
@@ -88,7 +89,7 @@ class File extends Component
 
 	            // 获取附件信息
 	            $file_info = [
-	                'uid'    => session('user_auth.uid')?? 1,
+	                'uid'    => session('user_auth.uid') ?? 1,
 	                'name'   => $file_name,
 	                'mime'   => $file->getMime(),
 	                'path'   => str_replace('\\', '/', $info),
@@ -104,9 +105,9 @@ class File extends Component
 
 	            // 写入数据库
 	            if ($file_add = Attachment::create($file_info)) {
-	                $file_path          = PUBLIC_PATH. $file_info['path'];
-	                $this->value        = $file_add['id'];
-	                $this->originalName = $file_name;
+	                $file_path     = PUBLIC_PATH. $file_info['path'];
+	                $this->value   = $file_add['id'];
+	                $this->preview = $file_path;
 	                return true;
 	            } else {
 	            	$this->error = '上传失败';
@@ -119,13 +120,13 @@ class File extends Component
 	}
 
 	public function clear(){
-		$this->value        = 0;
-		$this->originalName = '';
+		$this->value   = 0;
+		$this->preview = '';
 	}
 
 	public function render()
 	{
-		return (String) $this->view('file', [
+		return (String) $this->view('image', [
 			'id'       => $this->getComponentId(),
 			'uploaded' => $this->uploaded,
 		]);

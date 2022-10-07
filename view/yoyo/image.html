@@ -1,0 +1,104 @@
+<form>
+    <div class="flex justify-center">
+      <div class="mb-3 w-96">
+        <label for="formFile" class="form-label inline-block mb-2 text-gray-700">{$label}</label>
+        {if $preview}
+        <div id="{$id}_avatar" class="uploader-list">
+            <div class="file-item js-gallery thumbnail">
+                <img src="{$preview}" class="rounded-lg w-32">
+                <i class="fa fa-times-circle remove-picture" yoyo:get="clear" yoyo:on="click">X</i>
+            </div>
+        </div>
+        {/if}
+        <input 
+            name="{$name}"
+            class="form-control
+            block
+            w-full
+            px-3
+            py-1.5
+            text-base
+            font-normal
+            text-gray-700
+            bg-white bg-clip-padding
+            border border-solid border-gray-300
+            rounded
+            transition
+            ease-in-out
+            m-0
+            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+            type="file" 
+            id="{$id}"
+            value="{$value}" yoyo:post="render" required>
+            {if $error}
+            <div class="rounded-md bg-red-50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                        </div>
+                        <div class="ml-3">
+                        <h3 class="text-sm leading-5 font-medium text-red-800">
+                            {$error}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            {/if}
+      </div>
+    </div>
+    <style type="text/css">
+        .thumbnail {
+            display: block;
+            padding: 4px;
+            margin-bottom: 20px;
+            line-height: 1.42857143;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            -webkit-transition: border .2s ease-in-out;
+            -o-transition: border .2s ease-in-out;
+            transition: border .2s ease-in-out;
+        }
+        /* 文件上传 */
+        .file-item.thumbnail{
+            display: inline-block;
+            position: relative;
+            margin-right:15px;
+            float: left;
+        }
+        .file-item.thumbnail .info{
+            display: none;
+        }
+        .file-item.thumbnail .remove-picture{
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            font-size: 18px;
+            color: #CA4949;
+            cursor: pointer;
+            display: none;
+            z-index: 5;
+        }
+        .file-item.thumbnail .remove-picture:hover{
+            color: #EC6969;
+        }
+        .file-item.thumbnail .move-picture{
+            background: gainsboro;
+            padding: 2px;
+            cursor: move;
+            color: #ABABAB;
+            position: absolute;
+            left: -6px;
+            top: -5px;
+            border-radius: 50%;
+            display: none;
+            z-index: 5;
+        }
+        .file-item.thumbnail:hover .remove-picture,
+        .file-item.thumbnail:hover .move-picture{
+            display: block;
+        }
+    </style>
+</form>

@@ -634,5 +634,7 @@ class Posts extends Component
 
 ## html 内容 用 raw 函数
 
+## file 上传 组件封装 要在input 外围包一个form 标签
+
 
 
