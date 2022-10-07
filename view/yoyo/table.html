@@ -1,0 +1,64 @@
+{if $action}
+<div class="flex flex-col">
+	<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+		<div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+			<div class="overflow-hidden">
+				<table class="min-w-full {if $border} border{/if}">
+					<thead class="{$theader_color} border-b">
+						<tr>
+							{volist name="render_column" id="column"}
+							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-{$min?2:4} text-left {if $border} border-r{/if}">{$column.title?? $column.name}</th>
+							{/volist}
+						</tr>
+					</thead>
+					<tbody>
+						{volist name="render_data" id="row"}
+						{php}$mod = $key % 2;{/php}
+						<tr class="{if $striped}{if $mod ==0} bg-white {else /} bg-gray-100 {/if}{else /} bg-white {/if}
+						border-b {if $border} border-r{/if}">
+							{volist name="row" id="column"}
+							<td class="px-6 py-{$min?2:4} whitespace-nowrap text-sm font-medium text-gray-900 {if $border} border-r{/if}">{$column}</td>
+							{/volist}
+						</tr>
+						{/volist}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{else /}
+<div class="flex flex-col">
+	<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+		<div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+			<div class="overflow-hidden">
+				<table class="min-w-full {if $border} border{/if}">
+					<thead class="{$theader_color} border-b">
+						<tr>
+							{volist name="render_column" id="column" }
+							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-{$min?2:4} text-left {if $border} border-r{/if}">
+								{$column.title?? $column.name}
+							</th>
+							{/volist}
+						</tr>
+					</thead>
+					<tbody>
+						{volist name="render_data" id="row"}
+						{php}$mod = $key % 2;{/php}
+						<tr class="{if $striped}{if $mod ==0} bg-white {else /} bg-gray-100 {/if}{else /} bg-white {/if}
+						border-b {if $border} border-r{/if}">
+							{volist name="row" id="column"}
+							<td class="px-6 py-{$min?2:4} whitespace-nowrap text-sm font-medium text-gray-900 {if $border} border-r{/if}">{$column}</td>
+							{/volist}
+						</tr>
+						{/volist}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{/if}
+<div>
+	{if $paginate}{$paginate}{/if}
+</div>
