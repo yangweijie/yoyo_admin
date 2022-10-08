@@ -128,7 +128,7 @@ class Menu extends Model
                     continue;
                 }
                 if ($menu['url_value'] != '' && ($menu['url_type'] == 'module_admin' || $menu['url_type'] == 'module_home')) {
-                	$menu['params'] = parse_url($menu['params']);
+                	$menu['params'] = empty($menu['params'])? [] : parse_url($menu['params']);
                     $url = explode('/', $menu['url_value']);
                     $menu['controller'] = $url[1];
                     $menu['action']     = $url[2];

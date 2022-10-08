@@ -32,7 +32,6 @@ if (!function_exists('is_signin')) {
     function is_signin()
     {
         $user = session('user_auth');
-        ds($user);
         if (empty($user)) {
             // 判断是否记住登录
             if (cookie('?uid') && cookie('?signin_token')) {

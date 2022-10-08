@@ -607,7 +607,7 @@ class Search extends Component
 }
 ```
 
-Yoyo 足够只能来自动移除query 字符串当当前状态值匹配了 属性的默认值。
+Yoyo 足够智能来自动移除query 字符串当当前状态值匹配了 属性的默认值。
 
 举个例子，在一个分页组件里，你不需要 `?page=1` query 字符串出现在 URL里。
 
@@ -635,6 +635,8 @@ class Posts extends Component
 ## html 内容 用 raw 函数
 
 ## file 上传 组件封装 要在input 外围包一个form 标签
+
+## action 传参 直接用 `yoyo:get="foo(arg1)"` 这种
 
 
 

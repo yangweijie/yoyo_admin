@@ -28,8 +28,7 @@ class Admin extends BaseController
         if (config('system.deny_ie') && get_browser_type() == 'ie') {
             $this->redirect('admin/ie/index');
         }
-
-        if($this->request->action() !== 'User'){
+        if(!in_array($this->request->controller().'/'.$this->request->action(), ['User/login', 'User/logout'])){
 	        // 判断是否登录，并定义用户ID常量
 	        defined('UID') or define('UID', $this->isLogin());
 

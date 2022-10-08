@@ -20,6 +20,8 @@ class Table extends Component
 	public $delete        = true;
 	public $customActions = [];
 	public $search        = false;
+	public $keyword       = '';
+	public $search_keys   = [];
 	public $checkble      = true;
 	public $check         = 1;
 	public $checked       = [];
@@ -30,7 +32,7 @@ class Table extends Component
 	public $list_rows     = 0; // -1 表示不分页
 	public $paginate      = null;
 	public $request       = null;
-	public $props         = ['data', 'checked'];
+	public $props         = ['data', 'checked', 'model', 'search_keys'];
 
 	public function mount(){
 		$this->request = request();
@@ -42,31 +44,51 @@ class Table extends Component
 			if($this->list_rows != -1){
 				$this->list_rows = $this->list_rows? : config('app.list_rows');
 			}
+			// 模糊搜索
+			$this->keyword = trim($this->keyword);
+			if($this->keyword && $this->search_keys){
+				$this->map[] = [
+					implode('|', $this->search_keys),
+					'like',
+					"%{$this->keyword}%"
+				];
+			}
 			$fields = '*';
+			if($this->list_rows == -1){
+				$this->data = $this->model::where($this->map)->field($fields)->order($this->pk, 'asc')->select();
+			}else{
+				$this->data = $this->model::where($this->map)->field($fields)->order($this->pk, 'asc')->paginate($this->list_rows);
+				$this->paginate = $this->data->render();
+			}
 			if(method_exists($model, 'renderColumns')){
-				$columns                 = $model->renderColumns();
-				$fields                  = array_column($columns, 'name');
+				$columns   = $model->renderColumns();
+				$rawFields = array_column($columns, 'name');
 				$tableFields             = $model->getTableFields();
-				$tableFieldNames         = array_column($tableFields, 'name');
-				$temp                    = [];
 				$appends                 = [];
 
-				foreach ($fields as $key => $value) {
-					if(in_array($value, $tableFieldNames)){
-						$temp[] = $value;
+				foreach ($rawFields as $key => $value) {
+					if(in_array($value, $tableFields)){
+						;
 					}else if(method_exists($model, 'get'.Str::studly($value).'Attr')){
 						$appends[] = $value;
 					}
 				}
-				if($fields !== $temp){
-					$fields = $temp;
-				}
 			}
-			if($this->list_rows == -1){
-				$this->data = $this->model::where($this->map)->fields($fields)->append($appends)->orderBy($this->pk, 'asc')->select();
-			}else{
-				$this->data = $this->model::where($this->map)->fields($fields)->append($appends)->orderBy($this->pk, 'asc')->paginate($this->list_rows);
-				$this->paginate = $this->data->render();
+			if($appends && !$this->data->isEmpty()){
+				foreach ($this->data as $key => $row) {
+					$tempRow = [];
+					foreach ($rawFields as $f) {
+						if(isset($row[$f])){
+							$tempRow[$f] = $row[$f];
+						}else{
+							if(in_array($f, $appends)){
+								$funName     = 'get'.Str::studly($f).'Attr';
+								$tempRow[$f] = $model->$funName('', $row);
+							}
+						}
+					}
+					$this->data[$key] = $tempRow;
+				}
 			}
 		}
 	}
@@ -115,11 +137,8 @@ class Table extends Component
 	}
 
 	public function getRenderDataProperty(){
+		$ret = [];
 		if($this->model && class_exists($this->model)){
-			$ret = [];
-
-		}else{
-			$ret = [];
 			foreach ($this->data as $key => $value) {
 				if(is_string($value)){
 					$ret[] = json_decode($value, true);
@@ -127,9 +146,17 @@ class Table extends Component
 					$ret[] = $value;
 				}
 			}
-			$this->data = $ret;
-			return $this->data;
+		}else{
+			foreach ($this->data as $key => $value) {
+				if(is_string($value)){
+					$ret[] = json_decode($value, true);
+				}else{
+					$ret[] = $value;
+				}
+			}
 		}
+		$this->data = $ret;
+		return $this->data;
 	}
 
 	// 交互check

@@ -7,10 +7,10 @@ use app\admin\model\Role;
 use app\admin\model\Menu;
 use think\facade\View;
 
-class user extends BaseController
+class user extends Admin
 {
     public function index(){
-        return View::fetch();
+        return View::fetch('', ['title'=>'用户列表']);
     }
 
     public function login()

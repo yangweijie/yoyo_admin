@@ -30,6 +30,23 @@ class User extends Model
         return get_client_ip(1);
     }
 
+    public function renderColumns(){
+        return [
+            ['name' => 'id', 'title'=>'ID', 'type'=>'text'],
+            ['name' => 'username', 'title'=>'用户名', 'type', 'text'],
+            ['name' => 'nickname', 'title'=>'昵称', 'type'=>'text'],
+            ['name' => 'role_name', 'title'=>'角色','type'=>'text'],
+            ['name' => 'email', 'title'=>'邮箱', 'type'=>'text'],
+            ['name' => 'mobile', 'title'=>'手机号', 'type'=>'text'],
+            ['name' => 'create_time', 'title'=>'创建时间', 'type'=>'text'],
+            ['name' => 'status', 'title'=>'状态', 'type'=>'text'],
+        ];
+    }
+
+    public function getRoleNameAttr($value, $data){
+        return Role::getFieldById($data['role'], 'name');
+    }
+
     /**
      * 用户登录
      * @param string $username 用户名
