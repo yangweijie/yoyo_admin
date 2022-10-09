@@ -47,6 +47,11 @@ class User extends Model
         return Role::getFieldById($data['role'], 'name');
     }
 
+    public function getRolesAttr($value, $data){
+        $ret = Role::where('status = 1')->field(['id', 'name'])->select();
+        return array_column($ret->toArray(), 'name', 'id');
+    }
+
     /**
      * 用户登录
      * @param string $username 用户名

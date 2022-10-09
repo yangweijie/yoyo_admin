@@ -1353,7 +1353,7 @@ if (!function_exists('admin_url')) {
     function admin_url($url = '', $vars = [], $suffix = true, $domain = false) {
         $url = url($url, $vars, $suffix, $domain);
         if (defined('ENTRANCE') && ENTRANCE == 'admin') {
-            return str_ireplace(['admin.php/admin/', '.html'], ['admin.php/', ''], $url);
+            return str_ireplace(['admin.php/admin/', '.html', 'admin.php/admin.php'], ['admin.php/', '', 'admin.php'], $url);
         } else {
             return preg_replace('/\/index.php/', '/'.ADMIN_FILE, $url);
         }

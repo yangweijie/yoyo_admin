@@ -16,13 +16,14 @@ class Table extends Component
 	public $hoverable     = false;
 	public $border        = false;
 	public $min           = false;
+	public $add           = true;
 	public $edit          = true;
 	public $delete        = true;
 	public $customActions = [];
 	public $search        = false;
 	public $keyword       = '';
 	public $search_keys   = [];
-	public $checkble      = true;
+	public $checkble      = false;
 	public $check         = 1;
 	public $checked       = [];
 	public $checkSort     = SORT_NUMERIC;
@@ -61,10 +62,10 @@ class Table extends Component
 				$this->paginate = $this->data->render();
 			}
 			if(method_exists($model, 'renderColumns')){
-				$columns   = $model->renderColumns();
-				$rawFields = array_column($columns, 'name');
-				$tableFields             = $model->getTableFields();
-				$appends                 = [];
+				$columns     = $model->renderColumns();
+				$rawFields   = array_column($columns, 'name');
+				$tableFields = $model->getTableFields();
+				$appends     = [];
 
 				foreach ($rawFields as $key => $value) {
 					if(in_array($value, $tableFields)){

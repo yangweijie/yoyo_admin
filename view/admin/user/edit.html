@@ -1,0 +1,19 @@
+{extend name="base" /}
+
+{block name="content"}
+
+<div class="ml-64">
+	<form method="post" action="{:url('edit')}" class="p-6">
+		{:Yoyo\\yoyo_render('input', ['name'=>'id', 'type'=>'hidden', 'value'=>$info['id']])}
+		{:Yoyo\\yoyo_render('text', ['name'=>'username', 'value'=>$info['username']])}
+		{:Yoyo\\yoyo_render('input', ['name'=>'nickname', 'label'=>'昵称','type'=>'text', 'value'=>$info['nickname']])}
+		{:Yoyo\\yoyo_render('select', ['name'=>'role', 'label'=>'角色', 'value'=>$info['role'], 'options'=>$info['roles']])}
+		{:Yoyo\\yoyo_render('input', ['name'=>'email', 'label'=>'邮箱','type'=>'email', 'value'=>$info['email']])}
+		{:Yoyo\\yoyo_render('input', ['name'=>'password', 'label'=>'密码','type'=>'password', 'value'=>$info['password']])}
+		{:Yoyo\\yoyo_render('input', ['name'=>'tel', 'label'=>'手机号','type'=>'mobile', 'value'=>$info['mobile']])}
+		{:Yoyo\\yoyo_render('image', ['name'=>'avatar', 'label'=>'头像', 'value'=>$info['avatar']])}
+		{:Yoyo\\yoyo_render('Switchs', ['name'=>'status', 'label'=>'状态', 'value'=>$info['status']])}
+	</form>
+</div>
+
+{/block}

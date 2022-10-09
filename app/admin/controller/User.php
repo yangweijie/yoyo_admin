@@ -13,6 +13,10 @@ class user extends Admin
         return View::fetch('', ['title'=>'用户列表']);
     }
 
+    public function edit($id = ''){
+        return View::fetch('', ['title'=>'编辑用户', 'info'=>UserModel::find($id)]);
+    }
+
     public function login()
     {
          if ($this->request->isPost()) {

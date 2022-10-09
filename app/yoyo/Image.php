@@ -19,6 +19,14 @@ class Image extends Component
 
 	public function mount(){
 		$this->request = request();
+		if($this->value && $file_exists = Attachment::find($this->value)){
+			if ($file_exists['driver'] == 'local') {
+                $file_path = PUBLIC_PATH. $file_exists['path'];
+            } else {
+                $file_path = $file_exists['path'];
+            }
+			$this->preview = $file_path;
+		}
 	}
 
 	public function getUploadedProperty($dir = 'images'){
@@ -35,7 +43,6 @@ class Image extends Component
         $file_input_name = $this->name;
         $file            = $this->request->file($file_input_name);
         if($file){
-
 	        // 判断附件大小是否超过限制
 	        if ($size_limit > 0 && ($file->getInfo('size') > $size_limit)) {
 	            $this->error = '附件过大';

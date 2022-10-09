@@ -2,6 +2,11 @@
 <div class="flex flex-col">
 	<div class="overflow-x-auto sm:-mx-6 lg:-mx-16">
 		<div class="py-2 inline-block min-w-full sm:px-6 lg:px-16">
+			<div class="actions">
+				{if $add}
+				{:Yoyo\\yoyo_render('button', ['text'=>'添加', 'href'=>strtolower(admin_url('add'))])}
+				{/if}
+			</div>
 			<div class="form-outline mb-4">
               <input type="text" name="keyword" class="form-control" id="{$id}-search-input" yoyo:post="render" value="{$keyword}" yoyo:on="keyup delay:300ms changed" />
               <label class="form-label" for="{$id}-search-input" style="margin-left: 0px;">搜索</label>
@@ -33,11 +38,13 @@
 						{php}$mod = $key % 2;{/php}
 						<tr class="{if $striped}{if $mod ==0} bg-white {else /} bg-gray-100 {/if}{else /} bg-white {/if}
 						border-b {if $border} border-r{/if}">
+							{if $checkble}
 							<td scope="col">
 								<div class="form-check text-center mb-0">
 								    <input class="datatable-header-checkbox form-check-input" type="checkbox" yoyo:on="change" yoyo:get="checkToggle({$row[$pk]})" {if in_array($row[$pk], $checked)} checked {/if}>
 							  	</div>
 							</td>
+							{/if}
 							{volist name="row" id="column"}
 							<td class="px-6 py-{$min?2:4} whitespace-nowrap text-sm font-light text-gray-900 {if $border} border-r{/if}">{$column}</td>
 							{/volist}

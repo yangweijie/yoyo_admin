@@ -16,5 +16,7 @@
       ease-in-out
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="{$id}" placeholder value="{$value}" {if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if} />
+      {if $type !='hidden'}
   	<label for="{$id}" class="text-gray-700">{$label}</label>
+      {/if}
 </div>
