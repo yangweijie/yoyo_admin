@@ -11,6 +11,9 @@
     />
     <!-- Tailwind Elements CSS -->
     <link rel="stylesheet" href="/static/tw/css/index.min.css" />
+    <link rel="stylesheet" href="/static/js/viewer/viewer.min.css" />
+    <link rel="stylesheet" href="/static/js/sweetalert/sweetalert.min.css" />
+
 	<script src="https://cdn.tailwindcss.com"></script>
 	{block name="style"}{/block}
 	<script>
@@ -41,10 +44,12 @@
 	{/block}
     </div>
     <!-- End your project here-->
-
-
-
+ 
+	{load href="/static/js/jquery-3.6.1.min.js" /}
 	{load href="/static/tw/js/index.min.js" /}
+	{load href="/static/js/viewer/viewer.min.js" /}
+	{load href="/static/js/sweetalert/sweetalert.min.js" /}
+	{load href="/static/js/coco-message.min.js" /}
 
 	<script type="text/javascript">
     var datepickerTranslated = document.querySelector('.datepicker-translated');
@@ -62,8 +67,9 @@
 		    cancelBtnText: '取消',
 	    });
     }
-</script>
+	</script>
 
+	<script src="/static/js/common.js"></script>
 	{block name="script"}{/block}
 </body>
 </html>

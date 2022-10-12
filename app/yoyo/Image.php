@@ -40,7 +40,7 @@ class Image extends Component
         $thumb = $this->request->post('thumb', '');
         // 水印参数
         $watermark       = $this->request->post('watermark', '');
-        $file_input_name = $this->name;
+        $file_input_name = "{$this->name}_pic";
         $file            = $this->request->file($file_input_name);
         if($file){
 	        // 判断附件大小是否超过限制

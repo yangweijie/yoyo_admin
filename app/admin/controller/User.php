@@ -7,14 +7,19 @@ use app\admin\model\Role;
 use app\admin\model\Menu;
 use think\facade\View;
 
-class user extends Admin
+class User extends Admin
 {
     public function index(){
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
         return View::fetch('', ['title'=>'用户列表']);
     }
 
     public function edit($id = ''){
-        return View::fetch('', ['title'=>'编辑用户', 'info'=>UserModel::find($id)]);
+        if($this->request->isPost()){
+            $this->success('123', cookie('__forward__'));
+        }else{
+            return View::fetch('', ['title'=>'编辑用户', 'info'=>UserModel::find($id)]);
+        }
     }
 
     public function login()

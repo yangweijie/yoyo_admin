@@ -1,9 +1,8 @@
-<form>
     <div class="flex justify-center">
       <div class="mb-3 w-96">
         <label for="formFile" class="form-label inline-block mb-2 text-gray-700">{$label}</label>
         <input 
-            name="{$name}"
+            name="{$name}_file"
             class="form-control
             block
             w-full
@@ -21,7 +20,8 @@
             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
             type="file" 
             id="{$id}"
-            value="{$value}" yoyo:post="render" required>
+            value="{$value}" yoyo:post="render" required />
+            <input type="file" name="{$name}" class="form-control" value="{$value}" />
             {if $error}
             <div class="rounded-md bg-red-50 p-4">
                 <div class="flex">
@@ -46,4 +46,3 @@
             {/if}
       </div>
     </div>
-</form>

@@ -8,17 +8,20 @@ use app\admin\model\Attachment;
 class File extends Component
 {
 	
-	public $label  = '文件';
-	public $value  = 0;
-	public $name   = 'file';
-	public $error  = '';
-	public $from   = '';
-	public $module = 'admin';
+	public $label        = '文件';
+	public $value        = 0;
+	public $name         = 'file';
+	public $error        = '';
+	public $from         = '';
+	public $module       = 'admin';
 	public $originalName = '';
-	public $request = null;
+	public $request      = null;
 
 	public function mount(){
 		$this->request = request();
+		if($this->value && $file_exists = Attachment::find($this->value)){
+			$this->originalName = $file_exists['name'];
+		}
 	}
 
 	public function getUploadedProperty($dir = 'file'){
@@ -32,7 +35,7 @@ class File extends Component
         $thumb = $this->request->post('thumb', '');
         // 水印参数
         $watermark       = $this->request->post('watermark', '');
-        $file_input_name = $this->name;
+        $file_input_name = "{$this->name}_file";
         $file            = $this->request->file($file_input_name);
         if($file){
 	        // 判断附件大小是否超过限制

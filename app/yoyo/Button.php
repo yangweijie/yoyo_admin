@@ -7,9 +7,11 @@ use Clickfwd\Yoyo\Component;
 class Button extends Component
 {
 
+	private $sizes      = ['small' => 'px-4 py-1.5', 'medium'=>'px-6 py-2.5', 'large'=>'px-7 py-3'];
+
 	public $text        = 'button';
 	public $size        = 'medium';
-	private $sizes      = ['small' => 'px-4 py-1.5', 'medium'=>'px-6 py-2.5', 'large'=>'px-7 py-3'];
+	public $type        = 'button';
 	public $icon        = '';
 	public $color       = 'primary';
 	public $block       = false;
