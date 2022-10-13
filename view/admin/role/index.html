@@ -1,0 +1,17 @@
+{extend name="base" /}
+
+{block name="content"}
+
+<div class="ml-64">
+{:Yoyo\\yoyo_render('table', [
+'data'=>[],
+'model'        => '\\app\\admin\\model\\Role',
+'edit'         => true,
+'delete'       => true,
+'list_rows'    => -1,
+'column_width' => 'fixed',
+'search_keys'  => ['name', 'description'],
+])}
+</div>
+
+{/block}

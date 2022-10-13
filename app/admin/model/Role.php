@@ -3,7 +3,7 @@ namespace app\admin\model;
 
 use think\Model;
 use util\Tree;
-use app\admin\model\Menu as MenuModel;
+use app\admin\model\Menu as Menu;
 
 /**
  * 角色模型
@@ -16,6 +16,18 @@ class Role extends Model
 
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
+
+	public function renderColumns(){
+		return [
+			['name' => 'id', 'title'=>'ID', 'type'=>'text'],
+			['name' => 'name', 'title'=>'角色名称', 'type'=>'text'],
+			['name' => 'parent_name', 'title'=>'上级名称', 'type'=>'text'],
+			['name' => 'description', 'title'=>'描述','type'=>'text'],
+			['name' => 'create_time', 'title'=>'创建时间', 'type'=>'text'],
+			['name'=>  'access','title'=>'是否可登录后台','type'=>'status'],
+			['name' => 'status', 'title'=>'状态', 'type'=>'status'],
+		];
+	}
 
     // 写入时，将菜单id转成json格式
     public function setMenuAuthAttr($value)
@@ -128,7 +140,7 @@ class Role extends Model
                 return $url === false ? isset($menu_auth[$id]) : in_array($id, $menu_auth);
             }
             // 获取当前操作的id
-            $location = MenuModel::getLocation();
+            $location = Menu::getLocation();
             $action   = end($location);
 
             return $url === false ? isset($menu_auth[$action['id']]) : in_array($action['url_value'], $menu_auth);
@@ -151,7 +163,7 @@ class Role extends Model
         if (!$menu_auth) {
             $menu_auth = self::where('id', session('user_auth.role'))->value('menu_auth');
             $menu_auth = json_decode($menu_auth, true);
-            $menu_auth = MenuModel::where('id', 'in', $menu_auth)->column('url_value','id');
+            $menu_auth = Menu::where('id', 'in', $menu_auth)->column('url_value','id');
         }
         // 非开发模式，缓存数据
         if (config('app.develop_mode') == 0) {
@@ -205,4 +217,8 @@ class Role extends Model
             }
         }
     }
+
+	public function getParentNameAttr($value, $data){
+		return $data['pid'] == 0? '顶级角色': $this->getFieldById($data['pid'], 'name');
+	}
 }

@@ -4,7 +4,7 @@ namespace app\yoyo;
 
 use Clickfwd\Yoyo\Component;
 
-class Radio extends Component
+class radioRadio extends Component
 {
 	
 	public $name     = 'radio';

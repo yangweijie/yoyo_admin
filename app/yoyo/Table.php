@@ -62,12 +62,11 @@ class Table extends Component
 				$this->data = $this->model::where($this->map)->field($fields)->order($this->pk, 'asc')->paginate($this->list_rows);
 				$this->paginate = $this->data->render();
 			}
+			$appends     = [];
 			if(method_exists($model, 'renderColumns')){
 				$columns     = $model->renderColumns();
 				$rawFields   = array_column($columns, 'name');
 				$tableFields = $model->getTableFields();
-				$appends     = [];
-
 				foreach ($rawFields as $key => $value) {
 					if(in_array($value, $tableFields)){
 						;
