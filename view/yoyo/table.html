@@ -65,7 +65,11 @@
 								{:yoyo_render('link', ['text'=>'编辑', 'href'=>strtolower(admin_url('edit', ['id'=>$row[$pk]]))])}
 								{/if}
 								{if $delete}
-								{:yoyo_render('link', ['text'=>'删除', 'href'=>strtolower(admin_url('delete', ['id'=>$row[$pk]]))])}
+								{:yoyo_render('link', [
+									'text'=>'删除',
+									'href'=>strtolower(admin_url('delete', ['ids'=>$row[$pk], '_t'=>$table_token])),
+									'default'=>'transition duration-300 ease-in-out mb-4 ajax-get',
+								])}
 								{/if}
 							</td>
 						</tr>

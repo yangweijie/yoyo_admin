@@ -2,6 +2,7 @@
 
 namespace app\yoyo;
 
+use app\admin\model\Module;
 use Clickfwd\Yoyo\Component;
 use think\helper\Str;
 class Table extends Component
@@ -115,6 +116,22 @@ class Table extends Component
 		return $class;
 	}
 
+	public function getTableTokenProperty()
+	{
+		$model = new $this->model;
+		$data = [
+			'table'      => trim($model->getName()), // 表名或模型名
+			'prefix'     => 1,
+			'module'     => MODULE,
+			'controller' => strtolower($this->request->controller()),
+			'action'     => $this->request->action(),
+		];
+
+		$table_token = substr(sha1($data['module'].'-'.$data['controller'].'-'.$data['action'].'-'.$data['table']), 0, 8);
+		session($table_token, $data);
+		return $table_token;
+	}
+
 	public function getRenderColumnProperty(){
 		if($this->model && class_exists($this->model)){
 			$model = new $this->model;
@@ -193,6 +210,7 @@ class Table extends Component
 			'theader_color'  => $this->theader_color,
 			'render_data'   => $this->render_data,
 			'render_column' => $this->render_column,
+			'table_token'   =>$this->table_token,
 		]);
 	}
 }

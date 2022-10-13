@@ -115,6 +115,18 @@ class User extends Admin
 		}
 	}
 
+	/**
+	* 删除用户
+	* @param array $ids 用户id
+	* @author 蔡伟明 <314013107@qq.com>
+	* @throws \think\Exception
+	* @throws \think\exception\PDOException
+	*/
+	public function delete($ids = [])
+	{
+		$this->setStatus('delete');
+	}
+
 	public function login()
 	{
 		if ($this->request->isPost()) {
