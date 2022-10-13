@@ -33,13 +33,13 @@ class User extends Model
     public function renderColumns(){
         return [
             ['name' => 'id', 'title'=>'ID', 'type'=>'text'],
-            ['name' => 'username', 'title'=>'用户名', 'type', 'text'],
+            ['name' => 'username', 'title'=>'用户名', 'type'=>'text'],
             ['name' => 'nickname', 'title'=>'昵称', 'type'=>'text'],
             ['name' => 'role_name', 'title'=>'角色','type'=>'text'],
             ['name' => 'email', 'title'=>'邮箱', 'type'=>'text'],
             ['name' => 'mobile', 'title'=>'手机号', 'type'=>'text'],
             ['name' => 'create_time', 'title'=>'创建时间', 'type'=>'text'],
-            ['name' => 'status', 'title'=>'状态', 'type'=>'text'],
+            ['name' => 'status', 'title'=>'状态', 'type'=>'status'],
         ];
     }
 
