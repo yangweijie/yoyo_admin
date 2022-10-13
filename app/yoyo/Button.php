@@ -14,6 +14,7 @@ class Button extends Component
 	public $type        = 'button';
 	public $icon        = '';
 	public $color       = 'primary';
+	public $href        = '';
 	public $block       = false;
 	public $round       = false;
 	public $ripple      = false;

@@ -1600,3 +1600,7 @@ function filter_Emoji($str)
 function short_exception($e){
     return $e->getMessage().PHP_EOL . json_encode($e->getTrace()[0], JSON_UNESCAPED_UNICODE);
 }
+
+function yoyo_render($tag, $options){
+    return \Yoyo\yoyo_render($tag, $options);
+}

@@ -3,15 +3,15 @@
 {block name="content"}
 
 <div class="ml-64">
-	{:Yoyo\\yoyo_render('input', ['name'=>'id', 'type'=>'hidden', 'value'=>$info['id']])}
-	{:Yoyo\\yoyo_render('text', ['label'=>'用户名','name'=>'username', 'value'=>$info['username']])}
-	{:Yoyo\\yoyo_render('input', ['name'=>'nickname', 'label'=>'昵称','type'=>'text', 'value'=>$info['nickname']])}
-	{:Yoyo\\yoyo_render('select', ['name'=>'role', 'label'=>'角色', 'value'=>$info['role'], 'options'=>$info['roles']])}
-	{:Yoyo\\yoyo_render('input', ['name'=>'email', 'label'=>'邮箱','type'=>'email', 'value'=>$info['email']])}
-	{:Yoyo\\yoyo_render('input', ['name'=>'password', 'label'=>'密码','type'=>'password', 'value'=>$info['password']])}
-	{:Yoyo\\yoyo_render('input', ['name'=>'tel', 'label'=>'手机号','type'=>'mobile', 'value'=>$info['mobile']])}
-	{:Yoyo\\yoyo_render('image', ['name'=>'avatar', 'label'=>'头像', 'value'=>$info['avatar']])}
-	{:Yoyo\\yoyo_render('switchs', ['name'=>'status', 'label'=>'状态', 'value'=>$info['status']])}
+	{:yoyo_render('input', ['name'=>'id', 'type'=>'hidden', 'value'=>$info['id']])}
+	{:yoyo_render('text', ['label'=>'用户名','name'=>'username', 'value'=>$info['username']])}
+	{:yoyo_render('input', ['name'=>'nickname', 'label'=>'昵称','type'=>'text', 'value'=>$info['nickname']])}
+	{:yoyo_render('select', ['name'=>'role', 'label'=>'角色', 'value'=>$info['role'], 'options'=>$info['roles']])}
+	{:yoyo_render('input', ['name'=>'email', 'label'=>'邮箱','type'=>'email', 'value'=>$info['email']])}
+	{:yoyo_render('input', ['name'=>'password', 'label'=>'密码','type'=>'password', 'value'=>$info['password']])}
+	{:yoyo_render('input', ['name'=>'mobile', 'label'=>'手机号','type'=>'mobile', 'value'=>$info['mobile']])}
+	{:yoyo_render('image', ['name'=>'avatar', 'label'=>'头像', 'value'=>$info['avatar']])}
+	{:yoyo_render('switchs', ['name'=>'status', 'label'=>'状态', 'value'=>$info['status']])}
 
 	<div class="clear-both mt-12">
 		<button type="submit" class="ajax-post inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" target-form="form-control">提交</button>

@@ -4,10 +4,10 @@
 		<div class="py-2 inline-block min-w-full sm:px-6 lg:px-16">
 			<div class="actions">
 				{if $add}
-				{:Yoyo\\yoyo_render('button', ['text'=>'添加', 'href'=>strtolower(admin_url('add'))])}
+				{:yoyo_render('button', ['text'=>'添加', 'href'=>strtolower(admin_url('add')), 'size'=>'small'])}
 				{/if}
 			</div>
-			<div class="form-outline mb-4">
+			<div class="form-outline mt-4 mb-4">
               <input type="text" name="keyword" class="form-control" id="{$id}-search-input" yoyo:post="render" value="{$keyword}" yoyo:on="keyup delay:300ms changed" />
               <label class="form-label" for="{$id}-search-input" style="margin-left: 0px;">搜索</label>
             	<div class="form-notch">
@@ -50,10 +50,10 @@
 							{/volist}
 							<td>
 								{if $edit}
-								{:Yoyo\\yoyo_render('link', ['text'=>'编辑', 'href'=>strtolower(admin_url('edit', ['id'=>$row[$pk]]))])}
+								{:yoyo_render('link', ['text'=>'编辑', 'href'=>strtolower(admin_url('edit', ['id'=>$row[$pk]]))])}
 								{/if}
 								{if $delete}
-								{:Yoyo\\yoyo_render('link', ['text'=>'删除', 'href'=>strtolower(admin_url('delete', ['id'=>$row[$pk]]))])}
+								{:yoyo_render('link', ['text'=>'删除', 'href'=>strtolower(admin_url('delete', ['id'=>$row[$pk]]))])}
 								{/if}
 							</td>
 						</tr>

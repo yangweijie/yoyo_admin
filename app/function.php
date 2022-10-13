@@ -28,7 +28,6 @@ function get_username($uid = 0) {
 }
 
 if (!function_exists('get_cate_name')) {
-
     function get_cate_name($cid) {
         return Db::name('cms_column')->getFieldById($cid, 'name');
     }

@@ -165,7 +165,7 @@ class Menu extends Model
             // 获取当前节点地址
             $location = self::getLocation($id, false, false);
             // 当前顶级节点id
-            $top_id = $location[0]['id'];
+			$top_id = $location? $location[0]['id']?? 1 : 1;
             // 获取顶级节点下的所有节点
             $map = [
                 'status' => 1
