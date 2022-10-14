@@ -1,22 +1,24 @@
 <div class=" mb-3 xl:w-96">
 	<label for="{$id}" class="text-gray-700">{$label}</label>
 	<select id="{$id}" class="form-control form-select appearance-none
-	  block
-	  w-full
-	  px-3
-	  py-1.5
-	  text-base
-	  font-normal
-	  text-gray-700
-	  bg-white bg-clip-padding bg-no-repeat
-	  border border-solid border-gray-300
-	  rounded
-	  transition
-	  ease-in-out
-	  m-0
-	  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" name="{$name}" {if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if} >
+		block
+		w-full
+		px-3
+		py-1.5
+		text-base
+		font-normal
+		text-gray-700
+		bg-white bg-clip-padding bg-no-repeat
+		border border-solid border-gray-300
+		rounded
+		transition
+		ease-in-out
+		m-0
+		focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" name="{$name}" {if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if} >
+	  	{if $options}
 	  	{foreach $options as $k=>$option } 
 		<option {if $k == $value} selected{/if} value="{$k}">{$option}</option>  
 		{/foreach}
+		{/if}
 	</select>
 </div>

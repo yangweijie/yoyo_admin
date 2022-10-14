@@ -8,11 +8,14 @@ class check extends Component
 {
 	
 	public $name     = 'check';
-	public $checked  = false;
 	public $disabled = false;
 	public $value    = '';
 	public $inline   = false;
 	public $label    = 'check';
+	public $options  = [
+		'0'=>'男',
+		'1'=>'女',
+	];
 
 	public function render()
 	{
