@@ -23,6 +23,17 @@ class Config extends Model
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
+    public function renderColumns(){
+        return [
+            ['name' => 'id', 'title'=>'ID', 'type'=>'text'],
+            ['name' => 'name', 'title'=>'名称', 'type'=>'text'],
+            ['name' => 'title', 'title'=>'标题', 'type'=>'text'],
+            ['name' => 'type', 'title'=>'类型','type'=>'text'],
+            ['name' => 'status', 'title'=>'状态', 'type'=>'status'],
+            ['name' => 'sort', 'title'=>'排序', 'type'=>'text'],
+        ];
+    }
+
     /**
      * 获取配置信息
      * @param  string $name 配置名

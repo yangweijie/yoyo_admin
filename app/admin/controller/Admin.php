@@ -377,47 +377,4 @@ class Admin extends BaseController
             $this->error('操作失败');
         }
     }
-
-    /**
-     * 模块设置
-     * @author 蔡伟明 <314013107@qq.com>
-     * @return mixed
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    public function moduleConfig()
-    {
-        // 当前模块名
-        $module = MODULE;
-
-        // 保存
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-            $data = json_encode($data);
-
-            if (false !== ModuleModel::where('name', $module)->update(['config' => $data])) {
-                cache('module_config_'.$module, null);
-                $this->success('更新成功');
-            } else {
-                $this->error('更新失败');
-            }
-        }
-
-        // 模块配置信息
-        $module_info = ModuleModel::getInfoFromFile($module);
-        $config      = $module_info['config'];
-        $trigger     = isset($module_info['trigger']) ? $module_info['trigger'] : [];
-
-        // 数据库内的模块信息
-        $db_config = ModuleModel::where('name', $module)->value('config');
-        $db_config = json_decode($db_config, true);
-
-        // 使用ZBuilder快速创建表单
-        return ZBuilder::make('form')
-            ->setPageTitle('模块设置')
-            ->addFormItems($config)
-            ->setFormdata($db_config) // 设置表格数据
-            ->setTrigger($trigger) // 设置触发
-            ->fetch();
-    }
 }

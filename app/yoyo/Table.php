@@ -75,16 +75,18 @@ class Table extends Component
 					}
 				}
 			}
-			if($appends && !$this->data->isEmpty()){
+			if(!$this->data->isEmpty()){
 				foreach ($this->data as $key => $row) {
 					$tempRow = [];
 					foreach ($rawFields as $f) {
 						if(isset($row[$f])){
 							$tempRow[$f] = $row[$f];
 						}else{
-							if(in_array($f, $appends)){
+							if($appends && in_array($f, $appends)){
 								$funName     = 'get'.Str::studly($f).'Attr';
 								$tempRow[$f] = $model->$funName('', $row);
+							}else{
+								$tempRow[$f] = '';
 							}
 						}
 					}

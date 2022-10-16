@@ -113,5 +113,6 @@
 </div>
 {/if}
 <div>
-	{if $paginate}{$paginate}{/if}
+	{if $paginate}
+	<div class="flex justify-center">{$paginate|raw}</div>{/if}
 </div>
