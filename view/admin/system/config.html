@@ -81,7 +81,7 @@
 				'value'   => $config['value'],
 			])}
 			{/case}
-			{case textarea}
+			{case textarea||array}
 			{:yoyo_render('textarea', [
 				'name'  => $config['name'], 
 				'label' => $config['title'], 
@@ -108,6 +108,13 @@
 				'label'   => $config['title'], 
 				'value'   => $config['value'],
 				'options' => $config['options'],
+			])}
+			{/case}
+			{case tags}
+			{:yoyo_render('tags', [
+				'name'    => $config['name'], 
+				'label'   => $config['title'], 
+				'value'   => $config['value'],
 			])}
 			{/case}
 			{case image}

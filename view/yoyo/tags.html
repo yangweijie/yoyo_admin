@@ -1,0 +1,13 @@
+<div class="mb-3">
+    <label class="text-gray-700" for="{$name}">{$title|htmlspecialchars}</label>
+    <div class="">
+        <input class="js-tags-input form-control" type="text" id="{$name}" name="{$name}" value="{$value|default=''}" 
+        {if $required} required{/if} 
+		{if $disabled} disabled {/if} 
+		{if $readonly} readonly {/if} 
+		>
+        {notempty name="label"}
+        <div class="text-gray-700">{$label|raw|clear_js}</div>
+        {/notempty}
+    </div>
+</div>

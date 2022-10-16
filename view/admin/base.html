@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="/static/tw/css/index.min.css" />
     <link rel="stylesheet" href="/static/js/viewer/viewer.min.css" />
     <link rel="stylesheet" href="/static/js/sweetalert/sweetalert.min.css" />
-
+    <link rel="stylesheet" href="/static/js/jquery-tags-input/jquery.tagsinput.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/customer.css" />
 	<script src="https://cdn.tailwindcss.com"></script>
 	{block name="style"}{/block}
 	<script>
@@ -50,6 +51,7 @@
 	{load href="/static/js/viewer/viewer.min.js" /}
 	{load href="/static/js/sweetalert/sweetalert.min.js" /}
 	{load href="/static/js/coco-message.min.js" /}
+	{load href="/static/js/jquery-tags-input/jquery.tagsinput.min.js" /}
 
 	<script type="text/javascript">
     var datepickerTranslated = document.querySelector('.datepicker-translated');
@@ -67,6 +69,14 @@
 		    cancelBtnText: '取消',
 	    });
     }
+
+    jQuery('.js-tags-input').tagsInput({
+        height: 'auto',
+        width: '100%',
+        defaultText: '添加标签',
+        removeWithBackspace: true,
+        delimiter: [',']
+    });
 	</script>
 
 	<script src="/static/js/common.js"></script>
