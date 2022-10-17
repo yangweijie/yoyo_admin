@@ -4,32 +4,32 @@
 
 <div class="ml-64">
 	<div class="p-4">
-	  <ul class="md:flex-row nav nav-tabs flex flex-col flex-wrap list-none border-b-0 pl-0 mb-4" id="add-tab"
+	  	<ul class="md:flex-row nav nav-tabs flex flex-col flex-wrap list-none border-b-0 pl-0 mb-4" id="add-tab"
 	    role="tablist">
-	    {volist name="tab_list" id="item"}
-	    <li class="nav-item" role="presentation">
-	      <a href="{$item.url|admin_url|strtolower}" class="
-	        nav-link
-	        block
-	        font-medium
-	        text-xs
-	        leading-tight
-	        uppercase
-	        border-x-0 border-t-0 border-b-2 border-transparent
-	        px-6
-	        py-3
-	        my-2
-	        hover:border-transparent hover:bg-gray-100
-	        focus:border-transparent
-	        {if $key == $group}
-	        active
-	        {/if}
-	      " id="form_config-{$key}-tab" role="tab" aria-controls="form_config-{$key}"
-	        aria-selected="true">{$item.title}</a>
-	    </li>
-	    {/volist}
-	  </ul>
-	  <div class="tab-content" id="add-tabContent">
+		    {volist name="tab_list" id="item"}
+		    <li class="nav-item" role="presentation">
+		      <a href="{$item.url|admin_url|strtolower}" class="
+		        nav-link
+		        block
+		        font-medium
+		        text-xs
+		        leading-tight
+		        uppercase
+		        border-x-0 border-t-0 border-b-2 border-transparent
+		        px-6
+		        py-3
+		        my-2
+		        hover:border-transparent hover:bg-gray-100
+		        focus:border-transparent
+		        {if $key == $group}
+		        active
+		        {/if}
+		      " id="form_config-{$key}-tab" role="tab" aria-controls="form_config-{$key}"
+		        aria-selected="true">{$item.title}</a>
+		    </li>
+		    {/volist}
+	 	 </ul>
+	  	<div class="tab-content" id="add-tabContent">
 	    <div class="tab-pane fade show active" id="add-0" role="tabpanel" aria-labelledby="add-1-tab">
 			{volist name="data_list" id="config"}
 			{switch config.type}
@@ -141,7 +141,7 @@
 			{/switch}
 			{/volist}
 	    </div>
-	  </div>
+	  	</div>
 	</div>
 	<div class="clear-both">
 		<button type="submit" class="ajax-post inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" target-form="form-control">提交</button>

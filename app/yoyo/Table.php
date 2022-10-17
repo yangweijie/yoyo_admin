@@ -20,6 +20,7 @@ class Table extends Component
 	public $add           = true;
 	public $edit          = true;
 	public $delete        = true;
+	public $pageQuery     = [];
 	public $customActions = [];
 	public $search        = false;
 	public $keyword       = '';
@@ -59,7 +60,10 @@ class Table extends Component
 			if($this->list_rows == -1){
 				$this->data = $this->model::where($this->map)->field($fields)->order($this->pk, 'asc')->select();
 			}else{
-				$this->data = $this->model::where($this->map)->field($fields)->order($this->pk, 'asc')->paginate($this->list_rows);
+				if($this->keyword){
+					$this->pageQuery = array_merge($this->pageQuery, ['keyword'=>$this->keyword]);
+				}
+				$this->data = $this->model::where($this->map)->field($fields)->order($this->pk, 'asc')->paginate(['list_rows'=>$this->list_rows, 'query'=>$this->pageQuery]);
 				$this->paginate = $this->data->render();
 			}
 			$appends     = [];

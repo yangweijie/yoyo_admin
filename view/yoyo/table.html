@@ -4,7 +4,11 @@
 		<div class="py-2 inline-block min-w-full sm:px-6 lg:px-16">
 			<div class="actions">
 				{if $add}
+				{if is_array($add)}
+				{:yoyo_render('button', array_merge(['text'=>'添加', 'href'=>strtolower(admin_url('add')), 'size'=>'small'], $add))}
+				{else /}
 				{:yoyo_render('button', ['text'=>'添加', 'href'=>strtolower(admin_url('add')), 'size'=>'small'])}
+				{/if}
 				{/if}
 			</div>
 			<div class="form-outline mt-4 mb-4">

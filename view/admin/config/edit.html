@@ -1,0 +1,22 @@
+{extend name="base" /}
+
+{block name="content"}
+
+<div class="ml-64">
+	{:yoyo_render('radio', ['name'=>'group', 'label'=>'配置分组', 'options'=>config('app.config_group'), 'inline'=>true, 'value'=>$form_data['group']])}
+	{:yoyo_render('select', ['name'=>'type', 'label'=>'配置类型', 'options'=>config('app.form_item_type'), 'value'=>$form_data['type']])}
+	{:yoyo_render('input', ['name'=>'title', 'label'=>'配置标题','type'=>'text', 'value'=>$form_data['title']])}
+	{:yoyo_render('input', ['name'=>'name', 'label'=>'配置名称','type'=>'text', 'value'=>$form_data['name']])}
+	{:yoyo_render('textarea', ['name'=>'value', 'label'=>'配置值', 'value'=>$form_data['value']])}
+	{:yoyo_render('textarea', ['name'=>'options', 'label'=>'配置项', 'value'=>$form_data['options']])}
+	{:yoyo_render('input', ['name'=>'ajax_url', 'label'=>'异步请求地址', 'value'=>$form_data['ajax_url']])}
+	{:yoyo_render('input', ['name'=>'next_items', 'label'=>'下一级联动下拉框的表单名', 'value'=>$form_data['next_items']])}
+	{:yoyo_render('input', ['name'=>'param', 'label'=>'请求参数名, 联动下拉框请求参数名，默认为配置名称', 'value'=>$form_data['param']])}
+
+
+	<div class="clear-both mt-12">
+		<button type="submit" class="ajax-post inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" target-form="form-control">提交</button>
+	</div>
+</div>
+
+{/block}
