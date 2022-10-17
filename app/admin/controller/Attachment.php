@@ -28,56 +28,7 @@ class Attachment extends Admin
      */
     public function index()
     {
-        // 查询
-        // $map = $this->getMap();
-
-        // 数据列表
-        // $data_list = AttachmentModel::where($map)->order('sort asc,id desc')->paginate();
-        // foreach ($data_list as $key => &$value) {
-        //     if (in_array(strtolower($value['ext']), ['jpg', 'jpeg', 'png', 'gif', 'bmp'])) {
-        //         if ($value['driver'] == 'local') {
-        //             $thumb = $value['thumb'] != '' ? $value['thumb'] : $value['path'];
-        //             $value['type'] = '<div class="js-gallery"><img class="image" title="点击查看大图" data-original="'. PUBLIC_PATH . $value['path'].'" src="'. PUBLIC_PATH . $thumb.'"></div>';
-        //         } else {
-        //             $value['type'] = '<div class="js-gallery"><img class="image" title="点击查看大图" data-original="'. $value['path'].'" src="'. $value['path'].'"></div>';
-        //         }
-        //     } else {
-        //         if ($value['driver'] == 'local') {
-        //             $path = PUBLIC_PATH. $value['path'];
-        //         } else {
-        //             $path = $value['path'];
-        //         }
-        //         if (is_file('.'.config('app.public_static_path').'admin/img/files/'.$value['ext'].'.png')) {
-        //             $value['type'] = '<a href="'. $path.'"
-        //                 data-toggle="tooltip" title="点击下载">
-        //                 <img class="image" src="'.config('app.public_static_path').'admin/img/files/'.$value['ext'].'.png"></a>';
-        //         } else {
-        //             $value['type'] = '<a href="'. $path.'"
-        //                 data-toggle="tooltip" title="点击下载">
-        //                 <img class="image" src="'.config('app.public_static_path').'admin/img/files/file.png"></a>';
-        //         }
-        //     }
-        // }
-
         return View::fetch('', ['driver_options'=>parse_attr(Db::name('admin_config')->where('name', 'upload_driver')->value('options'))]);
-
-        // 使用ZBuilder快速创建数据表格
-        return ZBuilder::make('table')
-            ->setSearch(['name' => '名称']) // 设置搜索框
-            ->addColumns([ // 批量添加数据列
-                ['id', 'ID'],
-                ['type', '类型'],
-                ['name', '名称'],
-                ['size', '大小', 'byte'],
-                ['driver', '上传驱动', parse_attr(Db::name('admin_config')->where('name', 'upload_driver')->value('options'))],
-                ['create_time', '上传时间', 'datetime'],
-                ['status', '状态', 'switch'],
-                ['right_button', '操作', 'btn']
-            ])
-            ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
-            ->addRightButtons('delete') // 批量添加右侧按钮
-            ->setRowList($data_list) // 设置表格数据
-            ->fetch(); // 渲染模板
     }
 
     /**
@@ -806,8 +757,6 @@ class Attachment extends Admin
         }
         if (AttachmentModel::where('id', 'in', $ids)->delete()) {
             // 记录行为
-            $ids = is_array($ids) ? implode(',', $ids) : $ids;
-            action_log('attachment_delete', 'admin_attachment', 0, UID, $ids);
             $this->success('删除成功');
         } else {
             $this->error('删除失败');
