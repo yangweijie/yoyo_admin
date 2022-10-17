@@ -60,7 +60,7 @@
                             <div class="col-sm-12">
                                 <form action="{$Request.url}" method="get">
                                 <div class="toolbar-btn-action">
-                                    <a title="新增" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out" href="{:url('add', ['module' => $Request.param.group])}"><i class="fa fa-plus-circle"></i> 新增</a>
+                                    <a title="新增" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out" href="{:strtolower(admin_url('add', ['module' => $Request.param.group]))}"><i class="fa fa-plus-circle"></i> 新增</a>
                                     <button title="保存" type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out pointer-events-none opacity-60" id="save" disabled><i class="fa fa-check-circle-o"></i> 保存节点</button>
                                     <button title="隐藏禁用节点" type="button" class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" id="hide_disable"><i class="fa fa-eye-slash"></i> 隐藏禁用节点</button>
                                     <button title="显示禁用节点" type="button" class="inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out" id="show_disable"><i class="fa fa-eye"></i> 显示禁用节点</button>
@@ -132,21 +132,21 @@
 
         // 保存节点
         $('#save').click(function(){
-            Yoyo.loading();
+            yoyo.loading();
             $.post("{:url('save')}", {menus: $('#menu_list').nestable('serialize')}, function(data) {
-                Yoyo.loading('hide');
+                yoyo.loading('hide');
                 if (data.code) {
-                    $('#save').removeClass('btn-success').addClass('btn-default disabled');
-                    Yoyo.notify(data.msg, 'success');
+                    $('#save').addClass('pointer-events-none opacity-60');
+                    yoyo.notify(data.msg, 'success');
                 } else {
-                    Yoyo.notify(data.msg, 'danger');
+                    yoyo.notify(data.msg, 'danger');
                 }
             });
         });
 
         // 初始化节点拖拽
         $('#menu_list').nestable({maxDepth:4}).on('change', function(){
-            $('#save').removeAttr("disabled").removeClass('btn-default disabled').addClass('btn-success');
+            $('#save').removeAttr("disabled").removeClass('pointer-events-none opacity-60');
         });
 
         // 隐藏禁用节点
@@ -173,17 +173,17 @@
         $('.dd3-content').delegate('.disable', 'click', function(){
             var self     = $(this);
             var ids      = self.data('ids');
-            var ajax_url = '{:url("disable", ["table" => "admin_menu"])}';
-            Yoyo.loading();
+            var ajax_url = '{:strtolower(admin_url("disable", ["table" => "admin_menu"]))}';
+            yoyo.loading();
             $.post(ajax_url, {ids:ids}, function(data) {
-                Yoyo.loading('hide');
+                yoyo.loading('hide');
                 if (data.code) {
                     self.attr('data-original-title', '启用').removeClass('disable').addClass('enable')
-                        .children().removeClass('fa-ban').addClass('fa-check-circle-o')
+                        .children().removeClass('fa-ban').addClass('fa-check-circle')
                         .closest('.dd-item')
                         .addClass('dd-disable');
                 } else {
-                    Yoyo.notify(data.msg, 'danger');
+                    yoyo.notify(data.msg, 'danger');
                 }
             });
             return false;
@@ -193,17 +193,17 @@
         $('.dd3-content').delegate('.enable', 'click', function(){
             var self     = $(this);
             var ids      = self.data('ids');
-            var ajax_url = '{:url("enable", ["table" => "admin_menu"])}';
-            Yoyo.loading();
+            var ajax_url = '{:strtolower(admin_url("enable", ["table" => "admin_menu"]))}';
+            yoyo.loading();
             $.post(ajax_url, {ids:ids}, function(data) {
-                Yoyo.loading('hide');
+                yoyo.loading('hide');
                 if (data.code) {
                     self.attr('data-original-title', '禁用').removeClass('enable').addClass('disable')
-                        .children().removeClass('fa-check-circle-o').addClass('fa-ban')
+                        .children().removeClass('fa-check-circle').addClass('fa-ban')
                         .closest('.dd-item')
                         .removeClass('dd-disable');
                 } else {
-                    Yoyo.notify(data.msg, 'danger');
+                    yoyo.notify(data.msg, 'danger');
                 }
             });
             return false;

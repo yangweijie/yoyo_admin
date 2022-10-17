@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Module as ModuleModel;
 use app\admin\model\Menu as MenuModel;
-use app\user\model\Role as RoleModel;
+use app\admin\model\Role as RoleModel;
 use think\facade\Cache;
 use think\facade\View;
 
@@ -109,38 +109,17 @@ class Menu extends Admin
                 Cache::clear();
                 // 记录行为
                 $details = '所属模块('.$data['module'].'),所属节点ID('.$data['pid'].'),节点标题('.$data['title'].'),节点链接('.$data['url_value'].')';
-                action_log('menu_add', 'admin_menu', $menu['id'], UID, $details);
                 $this->success('新增成功', cookie('__forward__'));
             } else {
                 $this->error('新增失败');
             }
         }
 
-        // 使用ZBuilder快速创建表单
-        return ZBuilder::make('form')
-            ->setPageTitle('新增节点')
-            ->addLinkage('module', '所属模块', '', ModuleModel::getModule(), $module, url('ajax/getModuleMenus'), 'pid')
-            ->addFormItems([
-                ['select', 'pid', '所属节点', '所属上级节点', MenuModel::getMenuTree(0, '', $module), $pid],
-                ['text', 'title', '节点标题'],
-                ['radio', 'url_type', '链接类型', '', ['module_admin' => '模块链接(后台)', 'module_home' => '模块链接(前台)', 'link' => '普通链接'], 'module_admin']
-            ])
-            ->addFormItem(
-                'text',
-                'url_value',
-                '节点链接',
-                "可留空，如果是模块链接，请填写<code>模块/控制器/操作</code>，如：<code>admin/menu/add</code>。如果是普通链接，则直接填写url地址，如：<code>http://www.dolphinphp.com</code>"
-            )
-            ->addText('params', '参数', '如：a=1&b=2')
-            ->addSelect('role', '角色', '除超级管理员外，拥有该节点权限的角色', RoleModel::where('id', '<>', 1)->column('name','id'), '', 'multiple')
-            ->addRadio('auto_create', '自动添加子节点', '选择【是】则自动添加指定的子节点', ['否', '是'], 0)
-            ->addCheckbox('child_node', '子节点', '仅上面选项为【是】时起作用', ['add' => '新增', 'edit' => '编辑', 'delete' => '删除', 'enable' => '启用', 'disable' => '禁用', 'quickedit' => '快速编辑'], 'add,edit,delete,enable,disable,quickedit')
-            ->addRadio('url_target', '打开方式', '', ['_self' => '当前窗口', '_blank' => '新窗口'], '_self')
-            ->addIcon('icon', '图标', '导航图标')
-            ->addRadio('online_hide', '网站上线后隐藏', '关闭开发模式后，则隐藏该菜单节点', ['否', '是'], 0)
-            ->addText('sort', '排序', '', 100)
-            ->setTrigger('auto_create', '1', 'child_node', false)
-            ->fetch();
+        return View::fetch('', [
+            'title'   => '新增节点',
+            'group'   => input('group', $module),
+            'parents' => MenuModel::getMenuTree(0, '', 'admin'),
+        ]);
     }
 
     /**
@@ -161,10 +140,15 @@ class Menu extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post('', null, 'trim');
 
-            // 验证
-            $result = $this->validate($data, 'Menu');
+            try {
+                $error = '';
+                // 验证
+                $result = $this->validate($data, 'Menu');
+            } catch (\Exception $e) {
+                $error = $e->getMessage();
+            }
             // 验证失败 输出错误信息
-            if(true !== $result) $this->error($result);
+            if($error) $this->error($error);
 
             // 顶部节点url检查
             if ($data['pid'] == 0 && $data['url_value'] == '' && ($data['url_type'] == 'module_admin' || $data['url_type'] == 'module_home')) {
@@ -183,9 +167,6 @@ class Menu extends Admin
 
             if (MenuModel::update($data)) {
                 Cache::clear();
-                // 记录行为
-                $details = '节点ID('.$id.')';
-                action_log('menu_edit', 'admin_menu', $id, UID, $details);
                 $this->success('编辑成功', cookie('__forward__'));
             } else {
                 $this->error('编辑失败');
@@ -197,28 +178,11 @@ class Menu extends Admin
         // 拥有该节点权限的角色
         $info['role'] = RoleModel::getRoleWithMenu($id);
 
-        // 使用ZBuilder快速创建表单
-        return ZBuilder::make('form')
-            ->setPageTitle('编辑节点')
-            ->addFormItem('hidden', 'id')
-            ->addLinkage('module', '所属模块', '', ModuleModel::getModule(), '', url('ajax/getModuleMenus'), 'pid')
-            ->addFormItem('select', 'pid', '所属节点', '所属上级节点', MenuModel::getMenuTree(0, '', $info['module']))
-            ->addFormItem('text', 'title', '节点标题')
-            ->addFormItem('radio', 'url_type', '链接类型', '', ['module_admin' => '模块链接(后台)', 'module_home' => '模块链接(前台)', 'link' => '普通链接'], 'module_admin')
-            ->addFormItem(
-                'text',
-                'url_value',
-                '节点链接',
-                "可留空，如果是模块链接，请填写<code>模块/控制器/操作</code>，如：<code>admin/menu/add</code>。如果是普通链接，则直接填写url地址，如：<code>http://www.dolphinphp.com</code>"
-            )
-            ->addText('params', '参数', '如：a=1&b=2')
-            ->addSelect('role', '角色', '除超级管理员外，拥有该节点权限的角色', RoleModel::where('id', '<>', 1)->column('name','id'), '', 'multiple')
-            ->addRadio('url_target', '打开方式', '', ['_self' => '当前窗口', '_blank' => '新窗口'], '_self')
-            ->addIcon('icon', '图标', '导航图标')
-            ->addRadio('online_hide', '网站上线后隐藏', '关闭开发模式后，则隐藏该菜单节点', ['否', '是'])
-            ->addText('sort', '排序', '', 100)
-            ->setFormData($info)
-            ->fetch();
+        return View::fetch('', [
+            'title'     => '编辑节点',
+            'parents'   => MenuModel::getMenuTree(0, '', 'admin'),
+            'form_data' => $info,
+        ]);
     }
 
     /**
@@ -316,7 +280,7 @@ class Menu extends Admin
         $id = $this->request->param('id');
         $menu = MenuModel::where('id', $id)->find();
 
-        if ($menu['system_menu'] == '1') $this->error('系统节点，禁止删除');
+        // if ($menu['system_menu'] == '1') $this->error('系统节点，禁止删除');
 
         // 获取该节点的所有后辈节点id
         $menu_childs = MenuModel::getChildsId($id);
@@ -329,7 +293,6 @@ class Menu extends Admin
             Cache::clear();
             // 记录行为
             $details = '节点ID('.$id.'),节点标题('.$menu['title'].'),节点链接('.$menu['url_value'].')';
-            action_log('menu_delete', 'admin_menu', $id, UID, $details);
             $this->success('删除成功');
         } else {
             $this->error('删除失败');
@@ -454,7 +417,7 @@ class Menu extends Admin
                     $result .= '<span class="link"><i class="fa fa-link"></i> '.$value['url_value'].'</span>';
                 }
                 $result .= '<div class="action">';
-                $result .= '<a href="'.url('add', ['module' => $value['module'], 'pid' => $value['id']]).'" data-toggle="tooltip" data-original-title="新增子节点"><i class="list-icon fa fa-plus fa-fw"></i></a><a href="'.url('edit', ['id' => $value['id']]).'" data-toggle="tooltip" data-original-title="编辑"><i class="list-icon fa fa-pencil fa-fw"></i></a>';
+                $result .= '<a href="'.strtolower(admin_url('add', ['module' => $value['module'], 'pid' => $value['id']])).'" data-toggle="tooltip" data-original-title="新增子节点"><i class="list-icon fa fa-plus fa-fw"></i></a><a href="'.strtolower(admin_url('edit', ['id' => $value['id']])).'" data-toggle="tooltip" data-original-title="编辑"><i class="list-icon fa fa-pencil fa-fw"></i></a>';
                 if ($value['status'] == 0) {
                     // 启用
                     $result .= '<a href="javascript:void(0);" data-ids="'.$value['id'].'" class="enable" data-toggle="tooltip" data-original-title="启用"><i class="list-icon fa fa-check-circle-o fa-fw"></i></a>';
@@ -462,7 +425,7 @@ class Menu extends Admin
                     // 禁用
                     $result .= '<a href="javascript:void(0);" data-ids="'.$value['id'].'" class="disable" data-toggle="tooltip" data-original-title="禁用"><i class="list-icon fa fa-ban fa-fw"></i></a>';
                 }
-                $result .= '<a href="'.url('delete', ['id' => $value['id'], 'table' => 'admin_menu']).'" data-toggle="tooltip" data-original-title="删除" class="ajax-get confirm"><i class="list-icon fa fa-times fa-fw"></i></a></div>';
+                $result .= '<a href="'.strtolower(admin_url('delete', ['id' => $value['id'], 'table' => 'admin_menu'])).'" data-toggle="tooltip" data-original-title="删除" class="ajax-get confirm"><i class="list-icon fa fa-times fa-fw"></i></a></div>';
                 $result .= '</div>';
 
                 if ($max_level == 0 || $curr_level != $max_level) {
@@ -526,10 +489,6 @@ class Menu extends Admin
 
         if (false !== MenuModel::where('id', $id)->update(['status'=>$status])) {
             Cache::clear();
-            // 记录行为日志
-            if (!empty($record)) {
-                call_user_func_array('action_log', $record);
-            }
             $this->success('操作成功');
         } else {
             $this->error('操作失败');
