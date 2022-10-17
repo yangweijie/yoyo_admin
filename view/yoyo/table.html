@@ -50,17 +50,26 @@
 							</td>
 							{/if}
 							{volist name="row" id="column"}
-							<td class="px-6 py-{$min?2:4} whitespace-nowrap text-sm font-light text-gray-900 {if $border} border-r{/if}">
+							<td class="table-cell px-6 py-{$min?2:4} whitespace-nowrap text-sm font-light text-gray-900 {if $border} border-r{/if}">
 							{php}
 							$field_key = array_search($key, array_column($render_column, 'name'));
 							{/php}
 							{switch render_column[$field_key]['type']}
+							{case label}
+							{php}
+							$field_options = $render_column[$field_key]['name'].'_options';
+							{/php}
+							{$$field_options[$column]}
+							{/case}
+							{case byte}
+							{$column|format_bytes}
+							{/case}
 							{case status}
 							<span class="inline-block py-1.5 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold {$column == 1?'bg-green-600':'bg-yellow-500'} text-white rounded">
 							{$column == 1? '启用' : '禁用'}
 							</span>
 							{/case}
-							{default /}{$column}
+							{default /}{$column|raw}
 							{/switch}
 							</td>
 							{/volist}

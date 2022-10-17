@@ -77,3 +77,16 @@ div.tagsinput span.tag a {
     background: #FFFFF3;
     border: 1px dashed #F3DDC6;
 }
+.js-gallery>img, .gallery-list .thumbnail>img, .uploader-list .thumbnail>img {
+    cursor: zoom-in;
+}
+.table-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    box-sizing: border-box;
+    min-height: 22px;
+}
+table > tbody > tr > td .image {
+    height: 40px;
+}

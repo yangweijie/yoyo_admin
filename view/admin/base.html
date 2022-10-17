@@ -80,6 +80,9 @@
         removeWithBackspace: true,
         delimiter: [',']
     });
+    jQuery('.js-gallery').each(function(){
+        jQuery(this).viewer({ url: 'data-original' });
+    });
 	</script>
 
 	<script src="/static/js/common.js"></script>

@@ -23,6 +23,18 @@ class Attachment extends Model
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
+    public function renderColumns(){
+        return [
+            ['name' => 'id', 'title'=>'ID', 'type'=>'text'],
+            ['name' => 'type', 'title'=>'类型', 'type'=>'text'],
+            ['name' => 'name', 'title'=>'名称', 'type'=>'text'],
+            ['name' => 'size', 'title'=>'大小','type'=>'byte'],
+            ['name' => 'driver','title'=>'上传驱动','type'=>'label'],
+            ['name' => 'create_time', 'title'=>'创建时间', 'type'=>'text'],
+            ['name' => 'status', 'title'=>'状态', 'type'=>'status'],
+        ];
+    }
+
     /**
      * 根据附件id获取路径
      * @param string|array $id 附件id
@@ -91,5 +103,32 @@ class Attachment extends Model
     public function getFileName($id = '')
     {
         return $this->where('id', $id)->value('name');
+    }
+
+    public function getTypeAttr($value, $data){
+        // 图片
+        if (in_array(strtolower($data['ext']), ['jpg', 'jpeg', 'png', 'gif', 'bmp'])) {
+            if ($data['driver'] == 'local') {
+                $thumb = $data['thumb'] != '' ? $data['thumb'] : $data['path'];
+                return '<div class="js-gallery"><img class="image" title="点击查看大图" data-original="'. PUBLIC_PATH . $data['path'].'" src="'. PUBLIC_PATH . $thumb.'"></div>';
+            } else {
+                return '<div class="js-gallery"><img class="image" title="点击查看大图" data-original="'. $data['path'].'" src="'. $data['path'].'"></div>';
+            }
+        }else{
+            if ($data['driver'] == 'local') {
+                $path = PUBLIC_PATH. $data['path'];
+            } else {
+                $path = $data['path'];
+            }
+            if (is_file('.'.config('app.public_static_path').'admin/img/files/'.$data['ext'].'.png')) {
+                return '<a href="'. $path.'"
+                    data-toggle="tooltip" title="点击下载">
+                    <img class="image" src="/static/admin/img/files/'.$data['ext'].'.png"></a>';
+            } else {
+                return '<a href="'. $path.'"
+                    data-toggle="tooltip" title="点击下载">
+                    <img class="image" src="/static/admin/img/files/file.png"></a>';
+            }
+        }
     }
 }
