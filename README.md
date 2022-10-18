@@ -37,15 +37,15 @@ admin ya123456
 
 ## todo
 
-[] liveSearch 动态下拉
+- [] liveSearch 动态下拉
 
-[] trigger 某些表单变化触发别的表单项显隐
+- [] trigger 某些表单变化触发别的表单项显隐
 
-[] 富文本编辑器
+- [] 富文本编辑器
 
-[] mdb js table组件？？
+- [] mdb js table组件？？
 
-[] 其他 laravel-admin 扩展 Dcat Admin 非官方应用市场 https://github.com/Sparkinzy/dcat-extension-client
+- [] 其他 laravel-admin 扩展 Dcat Admin 非官方应用市场 https://github.com/Sparkinzy/dcat-extension-client
 
 ## 注意点
 
