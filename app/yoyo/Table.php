@@ -16,11 +16,11 @@ class Table extends Component
 	public $striped       = false; 
 	public $hoverable     = false;
 	public $border        = false;
-	public $min           = false;
-	public $add           = true;
+	public $min           = false; // 是否窄表格
+	public $add           = true;  // 是否显示添加按钮
 	public $edit          = true;
 	public $delete        = true;
-	public $pageQuery     = [];
+	public $pageQuery     = []; // 分页时带的参数
 	public $customActions = [];
 	public $search        = false;
 	public $keyword       = '';
@@ -30,7 +30,7 @@ class Table extends Component
 	public $checked       = [];
 	public $checkSort     = SORT_NUMERIC;
 	public $pk            = 'id';
-	public $model         = '';
+	public $model         = ''; // 模型命名空间
 	public $map           = [];
 	public $list_rows     = 0; // -1 表示不分页
 	public $paginate      = null;
@@ -121,6 +121,21 @@ class Table extends Component
 		return $class;
 	}
 
+	public function getSearchLabelProperty(){
+		if($this->search_keys){
+			$columns      = array_column($this->render_column, 'title', 'name');
+			$search_title = [];
+			foreach ($this->search_keys as $key => $value) {
+				if(isset($columns[$value])){
+					$search_title[] = $columns[$value];
+				}
+			}
+			return implode('|', $search_title);
+		}else{
+			return '搜索';
+		}
+	}
+
 	public function getTableTokenProperty()
 	{
 		$model = new $this->model;
@@ -153,7 +168,7 @@ class Table extends Component
 				$columns = array_keys($this->data[0]);
 			}
 			foreach ($columns as $key => $column) {
-				$ret[] = ['name'=>$column, 'type'=>'text'];
+				$ret[] = ['name'=>$column, 'title'=>$column, 'type'=>'text'];
 			}
 			return $ret;
 		}
@@ -212,10 +227,11 @@ class Table extends Component
 		return (String) $this->view('table', [
 			'id'            => $this->getComponentId(),
 			'action'        => $this->action,
-			'theader_color'  => $this->theader_color,
+			'theader_color' => $this->theader_color,
 			'render_data'   => $this->render_data,
 			'render_column' => $this->render_column,
-			'table_token'   =>$this->table_token,
+			'search_label'  => $this->search_label,
+			'table_token'   => $this->table_token,
 		]);
 	}
 }
