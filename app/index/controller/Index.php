@@ -9,7 +9,7 @@ class Index extends BaseController
 {
     public function index()
     {
-        return View::fetch();
+        return $this->redirect('admin.php/index/index');
     }
 
     public function hello($name = 'ThinkPHP6')
