@@ -17,9 +17,9 @@ class Table extends Component
 	public $hoverable     = false;
 	public $border        = false;
 	public $min           = false; // 是否窄表格
-	public $add           = true;  // 是否显示添加按钮
-	public $edit          = true;
-	public $delete        = true;
+	public $add           = false;  // 是否显示添加按钮
+	public $edit          = false;
+	public $delete        = false;
 	public $pageQuery     = []; // 分页时带的参数
 	public $customActions = [];
 	public $search        = false;
@@ -101,10 +101,7 @@ class Table extends Component
 	}
 
 	public function getActionProperty(){
-		// if(empty($this->model)){
-		// 	return false;
-		// }
-		return $this->edit || $this->delete || $this->customActions;
+		return $this->edit || $this->delete || $this->customActions || $this->search_keys;
 	}
 
 	public function getTheaderColorProperty(){
@@ -138,6 +135,9 @@ class Table extends Component
 
 	public function getTableTokenProperty()
 	{
+		if(empty($this->model)){
+			return '';
+		}
 		$model = new $this->model;
 		$data = [
 			'table'      => trim($model->getName()), // 表名或模型名
@@ -192,9 +192,23 @@ class Table extends Component
 					$ret[] = $value;
 				}
 			}
+			$modify = [];
+			foreach ($this->data as $key => $value) {
+				if(is_string($value)){
+					$modify[] = json_decode($value, true);
+				}else{
+					$modify[] = $value;
+				}
+			}
+			if($this->keyword && $this->search_keys){
+				$search_values = [];
+				foreach ($this->search_keys as $key => $value) {
+					$search_values[] = "/{$this->keyword}/i";
+				}
+				$ret = list_search($modify, array_combine($this->search_keys, $search_values));
+			}
 		}
-		$this->data = $ret;
-		return $this->data;
+		return $ret;
 	}
 
 	// 交互check
@@ -228,8 +242,8 @@ class Table extends Component
 			'id'            => $this->getComponentId(),
 			'action'        => $this->action,
 			'theader_color' => $this->theader_color,
-			'render_data'   => $this->render_data,
 			'render_column' => $this->render_column,
+			'render_data'   => $this->render_data,
 			'search_label'  => $this->search_label,
 			'table_token'   => $this->table_token,
 		]);
