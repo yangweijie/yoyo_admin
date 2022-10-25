@@ -12,8 +12,14 @@
 				{/if}
 			</div>
 			<div class="form-outline mt-4 mb-4">
-              <input type="text" name="keyword" class="form-control" id="{$id}-search-input" yoyo:post="render" value="{$keyword}" yoyo:on="keyup delay:300ms changed" />
-              <label class="form-label" for="{$id}-search-input" style="margin-left: 0px;">{$search_label}</label>
+              <input type="text" name="keyword" class="form-control" id="{$id}-search-input" yoyo:post="render" value="{$keyword}" yoyo:on="keyup delay:300ms changed" yoyo:spinning.class="text-gray-300"/>
+              <label class="form-label" for="{$id}-search-input" style="margin-left: 0px;">{$search_label}
+              	<div yoyo:spinning.class.remove="hidden" class="inline-block hidden">
+				    <div class="spinner-border animate-spin inline-block w-4 h-4 border-4 rounded-full" role="status">
+				      <span class="visually-hidden">Loading...</span>
+				    </div>
+			  	</div>
+              </label>
             	<div class="form-notch">
             		<div class="form-notch-leading" style="width: 9px;"></div>
             		<div class="form-notch-middle" style="width: 47.2px;"></div>
@@ -34,7 +40,9 @@
 							{volist name="render_column" id="column"}
 							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-{$min?2:4} text-left {if $border} border-r{/if}">{$column.title?? $column.name}</th>
 							{/volist}
+							{if $edit && $delete}
 							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-{$min?2:4} text-left {if $border} border-r{/if}">操作</th>
+							{/if}
 						</tr>
 					</thead>
 					<tbody>
@@ -73,6 +81,7 @@
 							{/switch}
 							</td>
 							{/volist}
+							{if $edit && $delete}
 							<td>
 								{if $edit}
 								{:yoyo_render('link', ['text'=>'编辑', 'href'=>strtolower(admin_url('edit', ['id'=>$row[$pk]]))])}
@@ -85,6 +94,7 @@
 								])}
 								{/if}
 							</td>
+							{/if}
 						</tr>
 						{/volist}
 					</tbody>
