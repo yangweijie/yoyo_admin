@@ -3,39 +3,44 @@
 namespace app\yoyo;
 
 use app\admin\model\Module;
+use app\common\paginator\driver\YoyoArray;
 use Clickfwd\Yoyo\Component;
 use think\helper\Str;
+
 class Table extends Component
 {
 	
 	public $data       = [];
 
-	public $column_width  = 'auto';
-	public $header        = 'light'; // '' light dark
-	public $columns       = [];
-	public $striped       = false; 
-	public $hoverable     = false;
-	public $border        = false;
-	public $min           = false; // 是否窄表格
-	public $add           = false;  // 是否显示添加按钮
-	public $edit          = false;
-	public $delete        = false;
-	public $pageQuery     = []; // 分页时带的参数
-	public $customActions = [];
-	public $search        = false;
-	public $keyword       = '';
-	public $search_keys   = [];
-	public $checkble      = false;
-	public $check         = 1;
-	public $checked       = [];
-	public $checkSort     = SORT_NUMERIC;
-	public $pk            = 'id';
-	public $model         = ''; // 模型命名空间
-	public $map           = [];
-	public $list_rows     = 0; // -1 表示不分页
-	public $paginate      = null;
-	public $request       = null;
-	public $props         = ['data', 'checked', 'model', 'search_keys'];
+	public $column_width   = 'auto';
+	public $header         = 'light'; // '' light dark
+	public $columns        = [];
+	public $striped        = false; 
+	public $hoverable      = false;
+	public $border         = false;
+	public $min            = false; // 是否窄表格
+	public $add            = false;  // 是否显示添加按钮
+	public $edit           = false;
+	public $delete         = false;
+	public $pageQuery      = []; // 分页时带的参数
+	public $customActions  = [];
+	public $search         = false;
+	public $keyword        = '';
+	public $search_keys    = [];
+	public $checkble       = false;
+	public $check          = 1;
+	public $checked        = [];
+	public $checkSort      = SORT_NUMERIC;
+	public $pk             = 'id';
+	public $model          = ''; // 模型命名空间
+	public $map            = [];
+	public $list_rows      = 0; // -1 表示不分页
+	public $paginate       = null;
+	public $request        = null;
+	public $page           = 1;
+	public $props          = ['data', 'checked', 'model', 'search_keys', 'list_rows'];
+
+	protected $queryString = ['keyword', 'page'];
 
 	public function mount(){
 		$this->request = request();
@@ -207,6 +212,19 @@ class Table extends Component
 				}
 				$ret = list_search($modify, array_combine($this->search_keys, $search_values));
 			}
+			if($this->list_rows != -1){ // 分页
+				if($this->pageQuery){
+					$query_keys        = array_keys($this->pageQuery);
+					$this->queryString = array_merge($this->queryString, $query_keys);
+				}
+				$options = [];
+				if($this->pageQuery){
+					$options['query'] = $this->pageQuery;
+				}
+				$page           = new YoyoArray($ret, $this->list_rows, $this->page, count($ret), false, $options);
+				$ret            = $page->getCollection();
+				$this->paginate = $page->render();
+			}
 		}
 		return $ret;
 	}
@@ -234,6 +252,10 @@ class Table extends Component
 			$this->checked = [];
 			$this->check   = 1;
 		}
+	}
+
+	public function search($keyword = ''){
+		$this->keyword = trim($keyword);
 	}
 
 	public function render()
