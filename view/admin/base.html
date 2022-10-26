@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="/static/js/viewer/viewer.min.css" />
     <link rel="stylesheet" href="/static/js/sweetalert/sweetalert.min.css" />
     <link rel="stylesheet" href="/static/js/jquery-tags-input/jquery.tagsinput.min.css" />
-    <link href="/static/css/fontawesome.min.css" rel="stylesheet">
-  	<link href="/static/css/brands.min.css" rel="stylesheet">
-  	<link href="/static/css/solid.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/js/wang-editor/css/style.css" />
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+  	<link rel="stylesheet" href="/static/css/brands.min.css" />
+  	<link rel="stylesheet" href="/static/css/solid.min.css" />
 	<script src="https://cdn.tailwindcss.com"></script>
 	{block name="style"}{/block}
     <link rel="stylesheet" type="text/css" href="/static/css/customer.css" />
@@ -55,6 +56,16 @@
 	{load href="/static/js/sweetalert/sweetalert.min.js" /}
 	{load href="/static/js/coco-message.min.js" /}
 	{load href="/static/js/jquery-tags-input/jquery.tagsinput.min.js" /}
+	{load href="/static/js/wang-editor/js/index.js" /}
+
+	<script src="/static/js/common.js"></script>
+	<script>
+	const { createEditor, createToolbar } = window.wangEditor;
+	yoyo.file_upload_url     = '{$file_upload_url ? $file_upload_url : url("admin/attachment/upload", ["dir" => "files", "module" => MODULE])}';
+	yoyo.image_upload_url    = '{$image_upload_url ? $image_upload_url : url("admin/attachment/upload", ["dir" => "images", "module" => MODULE])}';
+	yoyo.upload_check_url    = '{$upload_check_url ? $upload_check_url : url("admin/ajax/check")}';
+	yoyo.wangeditor_emotions = "/static/js/wang-editor/emotions.data";
+	</script>
 
 	<script type="text/javascript">
     var datepickerTranslated = document.querySelector('.datepicker-translated');
@@ -73,19 +84,50 @@
 	    });
     }
 
-    jQuery('.js-tags-input').tagsInput({
-        height: 'auto',
-        width: '100%',
-        defaultText: '添加标签',
-        removeWithBackspace: true,
-        delimiter: [',']
-    });
-    jQuery('.js-gallery').each(function(){
-        jQuery(this).viewer({ url: 'data-original' });
+    jQuery(document).ready(function() {
+	    jQuery('.js-tags-input').tagsInput({
+	        height: 'auto',
+	        width: '100%',
+	        defaultText: '添加标签',
+	        removeWithBackspace: true,
+	        delimiter: [',']
+	    });
+	    jQuery('.js-gallery').each(function(){
+	        jQuery(this).viewer({ url: 'data-original' });
+	    });
+	    $('.js-wangeditor').each(function () {
+	        var wangeditor_name = $(this).attr('name');
+	        var wrapper_id      = $(this).attr('id');
+	        var imgExt          = $(this).data('img-ext') || '';
+	        var editorConfig    = {
+			    placeholder: '请输入',
+			    onChange(editor) {
+			  		const html = editor.getHtml()
+			      	console.log('editor content', html)
+			      	// 也可以同步到 <textarea>
+			      	$('#'+wrapper_id).val(html);
+			    }
+			}
+			const editor = createEditor({
+			    selector: '#'+wrapper_id+'—wrapper',
+			    html: '<p><br></p>',
+			    config: editorConfig,
+			    mode: 'simple', // or 'simple'
+			})
+
+			const toolbarConfig = {}
+
+			const toolbar = createToolbar({
+			    editor,
+			    selector: '#'+wrapper_id+'-toolbar-container',
+			    config: toolbarConfig,
+			    mode: 'default', // or 'simple'
+			});
+	    });
     });
 	</script>
 
-	<script src="/static/js/common.js"></script>
+	
 	{block name="script"}{/block}
 </body>
 </html>

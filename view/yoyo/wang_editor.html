@@ -1,0 +1,14 @@
+<div class="mb-3">
+	<label for="{$id}" class="form-label inline-block mb-2 text-gray-700">{$label}</label>
+	<div id="{$id}—wrapper" class="h-64">
+	    <div id="{$id}-toolbar-container"><!-- 工具栏 --></div>
+	    <div id="editor-container"><!-- 编辑器 --></div>
+	</div>
+	<textarea
+		name="{$name}"
+		id="{$id}"
+		class="form-control js-wangeditor hidden"
+		rows="{$rows}" 
+		data-img-ext="{:config('app.upload_image_ext')}"
+	>{$value}</textarea>
+</div>
