@@ -13,6 +13,9 @@ return [
         'HttpEnd'  => [],
         'LogLevel' => [],
         'LogWrite' => [],
+        'LogRecord'=>[
+            // 'app\\listener\\SqlWatch'
+        ],
     ],
 
     'subscribe' => [

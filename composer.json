@@ -28,7 +28,11 @@
         "topthink/think-view": "^1.0",
         "topthink/think-multi-app": "^1.0",
         "liliuwei/thinkphp-jump": "^1.5",
-        "xiaodi/think-whoops": "^1.1"
+        "xiaodi/think-whoops": "^1.1",
+        "nyholm/psr7": "^1.5",
+        "kriswallsmith/buzz": "^1.2",
+        "php-ffmpeg/php-ffmpeg": "^0.19.0",
+        "woxiaoyao81/think-image": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

@@ -252,25 +252,29 @@ function is_online(){
 	return 1;
 }
 
-function ptrace($msg, $at =[]){
-	$text = is_string($msg) ? $msg : '`' . print_r($msg, true) . '`';
-	$env = is_online()? '线上':'本地';
-
-	if(PHP_SAPI == 'cli'){
-		$content = "Log:【{$env}】 ".\think\facade\Request::url(true) . PHP_EOL .date('Y-m-d H:i:s').PHP_EOL. $text;
-	}else{
-	    $content = sprintf("Log:【%s】ip: %s", $env, get_client_ip(0,true)).'Snippet' . PHP_EOL . date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']) . ' ' . $_SERVER['SERVER_PROTOCOL'] . ' ' . $_SERVER['REQUEST_METHOD'] . ' : ' . \think\facade\Request::url(true) . PHP_EOL . $text;
-	}
-	$webhook = config('log.channels.ding.webhook');
-	$ding    = new \bingher\ding\DingBot([
-		'webhook'=>$webhook
-	]);
-	if($at){
-		$ding = $ding->at($at);
-	}
-	return $res = $ding->text($content);
-}
-
 function json_encode_pretty($arr){
     return json_encode($arr, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+}
+
+function lrc2srt($lrc) {
+    $lrc = explode( PHP_EOL, $lrc );
+    $srt = "";
+    $lines = array();
+    foreach ( $lrc as $lrcl ) {
+        if ( preg_match( "|\[(\d\d)\:(\d\d)\.(\d\d)\](.+)|", $lrcl, $m ) ) {
+            $lines[] = array(
+                'time' => "00:{$m[1]}:{$m[2]},{$m[3]}0", // convert to SubRip-style time
+                //front 设置字幕颜色
+                'lyrics' => '<font color=#FFFFFF>' . trim($m[4]) . '</font>'
+            );
+        }
+    }
+    for ( $i = 0; $i < count( $lines ); $i++ ) {
+        $n = $i + 1;
+        $nexttime = isset( $lines[$n]['time'] ) ? $lines[$n]['time'] : "99:00:00,000";
+        $srt .= "$n".PHP_EOL
+            .  "{$lines[$i]['time']} --> {$nexttime}".PHP_EOL
+            .  "{$lines[$i]['lyrics']}".PHP_EOL.PHP_EOL;
+    }
+    return $srt;
 }
