@@ -257,24 +257,46 @@ function json_encode_pretty($arr){
 }
 
 function lrc2srt($lrc) {
-    $lrc = explode( PHP_EOL, $lrc );
+    $transLine = IS_WIN? "\n" : PHP_EOL;
+    $lrc = explode( $transLine, $lrc );
+    // dump($lrc);
     $srt = "";
     $lines = array();
     foreach ( $lrc as $lrcl ) {
-        if ( preg_match( "|\[(\d\d)\:(\d\d)\.(\d\d)\](.+)|", $lrcl, $m ) ) {
-            $lines[] = array(
-                'time' => "00:{$m[1]}:{$m[2]},{$m[3]}0", // convert to SubRip-style time
-                //front 设置字幕颜色
-                'lyrics' => '<font color=#FFFFFF>' . trim($m[4]) . '</font>'
-            );
+        if (stripos($lrcl, '[') !== false && stripos($lrcl, ']') !== false && stripos($lrcl, ':') !== false) {
+            $m = [
+                1=>'',
+                2=>'',
+                3=>'',
+            ];
+            $m[4] = trim(strstr($lrcl, ']'), ']');
+            if(stripos($lrcl, '.') === false){
+                get_m:
+                $nums = explode(':', trim(strstr($lrcl, ']', true), '['));
+                $m[1] = $nums[0];
+                $m[2] = $nums[1];
+                $m[3] = $nums[2]??'000';
+            }else{
+                $lrcl = str_ireplace('.', ':', $lrcl);
+                goto get_m;
+            }
+            if($m[4]){
+                $lines[] = array(
+                    'time' => "00:{$m[1]}:{$m[2]},{$m[3]}0", // convert to SubRip-style time
+                    //front 设置字幕颜色
+                    'lyrics' => '<font color=#FFFFFF>' . trim($m[4]) . '</font>'
+                );
+            }
         }
     }
+    // dump($lines);
     for ( $i = 0; $i < count( $lines ); $i++ ) {
         $n = $i + 1;
         $nexttime = isset( $lines[$n]['time'] ) ? $lines[$n]['time'] : "99:00:00,000";
-        $srt .= "$n".PHP_EOL
-            .  "{$lines[$i]['time']} --> {$nexttime}".PHP_EOL
-            .  "{$lines[$i]['lyrics']}".PHP_EOL.PHP_EOL;
+        $srt .= "$n\n"
+            .  "{$lines[$i]['time']} --> {$nexttime}".$transLine
+            .  "{$lines[$i]['lyrics']}".$transLine.$transLine;
     }
+
     return $srt;
 }
