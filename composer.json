@@ -32,7 +32,8 @@
         "symfony/console": "^5.4",
         "yulinzhihou/think-whoops": "^0.0.1",
         "topthink/think-multi-app": "^1.0",
-        "topthink/think-trace": "^1.6"
+        "topthink/think-trace": "^1.6",
+        "yangweijie/think-laradumps": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
