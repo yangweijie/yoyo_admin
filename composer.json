@@ -30,7 +30,8 @@
         "php-ffmpeg/php-ffmpeg": "^0.19.0",
         "woxiaoyao81/think-image": "^1.0",
         "symfony/console": "^5.4",
-        "yulinzhihou/think-whoops": "^0.0.1"
+        "yulinzhihou/think-whoops": "^0.0.1",
+        "topthink/think-multi-app": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
