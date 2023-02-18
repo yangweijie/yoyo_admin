@@ -21,14 +21,10 @@
     ],
     "require": {
         "php": ">=7.2.5",
-        "topthink/framework": "^6.0.0",
+        "topthink/framework": "6.1.2",
         "topthink/think-orm": "^2.0",
-        "yangweijie/think-laradumps": "^1.0",
         "clickfwd/yoyo": "^0.8.1",
         "topthink/think-view": "^1.0",
-        "topthink/think-multi-app": "^1.0",
-        "liliuwei/thinkphp-jump": "^1.5",
-        "xiaodi/think-whoops": "^1.1",
         "nyholm/psr7": "^1.5",
         "kriswallsmith/buzz": "^1.2",
         "php-ffmpeg/php-ffmpeg": "^0.19.0",
@@ -36,8 +32,7 @@
         "symfony/console": "^5.4"
     },
     "require-dev": {
-        "symfony/var-dumper": "^4.2",
-        "topthink/think-trace":"^1.0"
+        "symfony/var-dumper": "^4.2"
     },
     "autoload": {
         "psr-4": {
