@@ -22,7 +22,7 @@
     "require": {
         "php": ">=7.2.5",
         "topthink/framework": "6.1.2",
-        "topthink/think-orm": "^2.0",
+        "topthink/think-orm": "3.0",
         "clickfwd/yoyo": "^0.8.1",
         "topthink/think-view": "^1.0",
         "nyholm/psr7": "^1.5",
