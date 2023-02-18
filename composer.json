@@ -34,7 +34,8 @@
         "topthink/think-multi-app": "^1.0",
         "topthink/think-trace": "^1.6",
         "yangweijie/think-laradumps": "^1.0",
-        "liliuwei/thinkphp-jump": "^1.5"
+        "liliuwei/thinkphp-jump": "^1.5",
+        "hmxingkong/think-multi-app": "^1.1"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
