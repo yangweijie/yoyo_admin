@@ -8,8 +8,13 @@ return [
         'AppInit'  => [],
         'HttpRun'  => [
             'app\\listener\\Init',
+            'app\\listener\\Config',
             'app\\listener\\YoyoInit',
         ],
+        // 'HttpRun'  => [
+        //     'app\\common\\listener\\Config',
+        //     'app\\common\\listener\\Hook',
+        // ],
         'HttpEnd'  => [],
         'LogLevel' => [],
         'LogWrite' => [],

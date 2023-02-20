@@ -66,7 +66,7 @@ class System extends Admin
                                 break;
                         }
                     }
-                    ConfigModel::where('name', $name)->update(['value' => $data[$name]]);
+                    ConfigModel::where('name', $name)->update(['value' => $data[$name]??'']);
                 }
             } else {
                 // 保存模块配置

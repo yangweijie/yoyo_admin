@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{:config('app.WEB_SITE_TITLE')}</title>
+	{:Yoyo\\yoyo_scripts()}
+	<link
+	  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+	  rel="stylesheet"
+	/>
+	<!-- Tailwind Elements CSS -->
+	<link rel="stylesheet" href="/static/tw/css/index.min.css" />
+	<link rel="stylesheet" href="/static/js/viewer/viewer.min.css" />
+	<link rel="stylesheet" href="/static/js/sweetalert/sweetalert.min.css" />
+	<link rel="stylesheet" href="/static/js/jquery-tags-input/jquery.tagsinput.min.css" />
+	<link rel="stylesheet" href="/static/js/wang-editor/css/style.css" />
+	<link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+	<link rel="stylesheet" href="/static/css/brands.min.css" />
+	<link rel="stylesheet" href="/static/css/solid.min.css" />
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{:url('/feed')}" />
+	<link rel="alternate" type="application/rdf+xml" title="RSS 1.0" href="{:url('/feed/rss')}" />
+	<link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="{:url('/feed/atom')}" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	{block name="style"}{/block}
+	<link rel="stylesheet" type="text/css" href="/static/css/customer.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/index.css" />
+	<script>
+	  tailwind.config = {
+		theme: {
+		  extend: {
+			fontFamily: {
+			  sans: ['Inter', 'sans-serif'],
+			},
+		  }
+		}
+	  }
+	</script>
+</head>
+<body>
+	{block name="nav"}
+	{include file="public/header"}
+	{/block}
+
+	<!-- Start your project here-->
+	<div class="mx-auto">
+		<div class="flex ml-64 mr-64 ">
+			<div class="w-9/12">
+			{__CONTENT__}
+			</div>
+			<div class="w-3/12">
+				<div class="w-full justify-center">
+					<div class="block p-6">
+						<h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">最新文章</h5>
+						<ul class="widget-list">
+							{volist name="new_article" id="vo"}
+							<li class="mx-1 my-1">
+								<a class="border-b-2 text-blue-80" href="{:url('index/archive/'.$vo['id'])}">{$vo.title}</a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="w-full justify-center">
+					<div class="block p-6">
+						<h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">分类</h5>
+						<ul class="widget-list">
+							{volist name="category" id="cate"}
+							<li class="mx-1 my-1">
+								<a class="border-b-2 text-blue-80" href="{:url('category/'.$cate['name'])}">
+									<i class="icon-chevron-right"></i>{$cate.title_display|raw}({$cate.article_num})
+								</a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="w-full justify-center">
+					<div class="block p-6">
+						<h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">标签</h5>
+						<ul class="widget-list">
+							{volist name="tags" id="vo"}
+							<li class="mx-1 my-1">
+								<a class="border-b-2 text-blue-80" href="{:url('/')}?tag={$vo}" title="{$vo}" data-pjax>
+									<span class="text-xs inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-bg-200 text-blue-700 rounded">{$vo}</span>
+								</a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="w-full justify-center">
+					<div class="block p-6">
+						<h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">归档</h5>
+						<ul class="widget-list">
+							{volist name="archive" id="vo"}
+							<li class="mx-1 my-1">
+								<a class="border-b-2 text-blue-80" href="{:url($vo['link'])}">{$vo.text}</a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+				</div>
+				<div class="w-full justify-center">
+					<div class="block p-6">
+						<h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">功能</h5>
+						<ul class="widget-list">
+							{if condition="is_signin()"}
+                            <li class="mx-1 my-1 last"><a class="border-b-2 text-blue-80" href="/admin.php/index/index">进入后台 (admin)</a></li>
+                            <li class="mx-1 my-1"><a class="border-b-2 text-blue-80 exit" href="/admin.php/user/publics/signout">登出</a></li>
+	                        {else /}
+                            <li class="mx-1 my-1"><a class="border-b-2 text-blue-80" href="/admin.php/user/publics/signin">登录</a></li>
+	                        {/if}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End your project here-->
+
+	{load href="/static/js/jquery-3.6.1.min.js" /}
+	{load href="/static/tw/js/index.min.js" /}
+	{load href="/static/js/viewer/viewer.min.js" /}
+	{load href="/static/js/sweetalert/sweetalert.min.js" /}
+	{load href="/static/js/coco-message.min.js" /}
+	{load href="/static/js/jquery-tags-input/jquery.tagsinput.min.js" /}
+	{load href="/static/js/wang-editor/js/index.js" /}
+	{load href="/static/js/nengjj.js" /}
+
+	<script src="/static/js/common.js"></script>
+	<script>
+	const { createEditor, createToolbar } = window.wangEditor;
+	yoyo.file_upload_url     = '{$file_upload_url ? $file_upload_url : url("admin/attachment/upload", ["dir" => "files", "module" => MODULE])}';
+	yoyo.image_upload_url    = '{$image_upload_url ? $image_upload_url : url("admin/attachment/upload", ["dir" => "images", "module" => MODULE])}';
+	yoyo.upload_check_url    = '{$upload_check_url ? $upload_check_url : url("admin/ajax/check")}';
+	yoyo.wangeditor_emotions = "/static/js/wang-editor/emotions.data";
+	</script>
+
+	<script type="text/javascript">
+	var datepickerTranslated = document.querySelector('.datepicker-translated');
+	if(datepickerTranslated){
+		new window.Datepicker(datepickerTranslated, {
+			title: '日期选择',
+			monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月',
+			'十月', '十一月', '十二月'],
+			monthsShort: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11','12'],
+			weekdaysFull: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+			weekdaysShort: ['日', '一', '二', '三', '四', '五', '六'],
+			weekdaysNarrow: ['S', 'M', 'D', 'M', 'D', 'F', 'S'],
+			okBtnText: 'Ok',
+			clearBtnText: '清除',
+			cancelBtnText: '取消',
+		});
+	}
+
+	jQuery(document).ready(function() {
+		jQuery('.js-tags-input').tagsInput({
+			height: 'auto',
+			width: '100%',
+			defaultText: '添加标签',
+			removeWithBackspace: true,
+			delimiter: [',']
+		});
+		jQuery('.js-gallery').each(function(){
+			jQuery(this).viewer({ url: 'data-original' });
+		});
+		$('.js-wangeditor').each(function () {
+			var wangeditor_name = $(this).attr('name');
+			var wrapper_id      = $(this).attr('id');
+			var imgExt          = $(this).data('img-ext') || '';
+			var editorConfig    = {
+				placeholder: '请输入',
+				onChange(editor) {
+					const html = editor.getHtml()
+					console.log('editor content', html)
+					// 也可以同步到 <textarea>
+					$('#'+wrapper_id).val(html);
+				}
+			}
+			const editor = createEditor({
+				selector: '#'+wrapper_id+'—wrapper',
+				html: '<p><br></p>',
+				config: editorConfig,
+				mode: 'simple', // or 'simple'
+			})
+
+			const toolbarConfig = {}
+
+			const toolbar = createToolbar({
+				editor,
+				selector: '#'+wrapper_id+'-toolbar-container',
+				config: toolbarConfig,
+				mode: 'default', // or 'simple'
+			});
+		});
+	});
+	</script>
+
+
+	{block name="script"}{/block}
+</body>
+</html>
