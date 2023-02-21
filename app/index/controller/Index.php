@@ -104,8 +104,7 @@ class Index extends BaseController
     //详情
     public function detail($id)
     {
-        $map       = new Where;
-        $map['id'] = ['in', '1,2'];
+        $map       = [['id','in','1,2']];
         $list      = Document::where($map)->select();
         // halt($list);
         /* 标识正确性检测 */
