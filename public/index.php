@@ -12,6 +12,7 @@
 // [ 应用入口文件 ]
 namespace think;
 
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 require __DIR__ . '/../vendor/autoload.php';
 
 // 定义后台入口文件

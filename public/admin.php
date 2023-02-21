@@ -10,6 +10,8 @@
 // [ 应用入口文件 ]
 namespace think;
 
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+
 // [ PHP版本检查 ]
 header("Content-type: text/html; charset=utf-8");
 if (version_compare(PHP_VERSION, '5.6', '<')) {
