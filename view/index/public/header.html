@@ -1,8 +1,12 @@
-
 <div class="mx-auto mt-16 border-b-2">
 	<div class="ml-64 mr-64 flex">
 		<div class="w-9/12">
-
+			<div class="pl-6">
+				<a id="logo" href="{:url('/')}">
+					{:config('app.web_site_title')}
+				</a>
+				<p class="description">{:config('app.web_site_slogan')}</p>
+			</div>
 		</div>
 	  	<div class="mb-3 w-3/12">
 			<form id="search" method="post" action="/index" role="search">
