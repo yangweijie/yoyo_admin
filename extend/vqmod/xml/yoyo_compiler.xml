@@ -14,7 +14,7 @@
 			$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 			]]></search>
 			<add><![CDATA[
-		$html = htmlspecialchars_decode(iconv('UTF-8', 'gbk', htmlentities($html, ENT_COMPAT, 'UTF-8')), ENT_QUOTES);
+		$html = htmlspecialchars_decode(iconv('UTF-8', 'GBK//IGNORE', htmlentities($html, ENT_COMPAT, 'UTF-8')), ENT_QUOTES);
 			]]></add>
 		</operation>
 	</file>
