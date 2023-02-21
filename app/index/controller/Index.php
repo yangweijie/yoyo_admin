@@ -41,7 +41,7 @@ class Index extends BaseController
         View::assign('tab_list', [
                 [
                     'title' => '首页',
-                    'url'   => url('/'),
+                    'url'   => '/',
                 ],
                 [
                     'title'=>'电脑爱好者',
