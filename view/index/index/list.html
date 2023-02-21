@@ -1,5 +1,5 @@
 {present name="_GET.tag"}
-<h3 class="archive-title">标签 <i>{$_GET.tag}</i> 下的文章</h3>
+<h3 class="archive-title p-3">标签 <i>{$_GET.tag}</i> 下的文章</h3>
 <script type="text/javascript">
 $(function(){
 	$('.widget-tag a:contains("{$_GET.tag}")').addClass('current')
@@ -7,15 +7,15 @@ $(function(){
 </script>
 {/present}
 {volist name="list" id="article"}
-	<article class="post p-3 ml-2 border-gray-300 border-b-2">
+	<article class="post p-3 border-gray-300 border-b-2">
 		<h2 class="m-1 text-xl">
 			<a href="{:url('/index.php/archive/'.$article['id'])}">{$article.title}</a>
 		</h2>
 		<ul class="post-meta text-gray-400">
 			<li class="inline-block">作者：<a href="javascript:;">{$article.username}</a></li>
 			<li class="inline-block" title="{$article.create_time|date='y,m,d'}">时间：{$article.create_time|date='F j, Y'}</li>
-			<li class="inline-block">分类：<a href="{:url('category/'.$article['column_name'])}">{$article.column_name}</a></li>
-			<li class="inline-block"><a href="{:url('archive/'.$article['id'].'#commentformbox')}">评论</a></li>
+			<li class="inline-block">分类：<a href="{:url('/category/'.$article['column_name'])}">{$article.column_name}</a></li>
+			<li class="inline-block"><a href="{:url('/archive/'.$article['id'].'#commentformbox')}">评论</a></li>
 		</ul>
 	</article>
 {/volist}

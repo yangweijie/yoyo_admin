@@ -57,6 +57,7 @@ class Error extends BaseController
                 break;
             case 'search':
                 $_GET['kw'] = $this->request->action();
+                trace($_GET);
                 $Index      = new Index($app);
                 return $Index->search($this->request->action());
                 break;

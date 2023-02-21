@@ -45,7 +45,7 @@
 	<!-- Start your project here-->
 	<div class="mx-auto">
 		<div class="flex ml-64 mr-64 ">
-			<div class="w-9/12">
+			<div class="w-9/12 pl-2">
 			{__CONTENT__}
 			</div>
 			<div class="w-3/12">
@@ -217,7 +217,7 @@
             $('#nav-menu a').removeClass('current');
             $('#nav-menu a[href="'+url+'"]').addClass('current');
             $('#search').submit(function(){
-                var url = '/index/search/'+ $('#search input[name="kw"]').val();
+                var url = '/index.php/index/search/'+ $('#search input[name="kw"]').val();
                 location.href = url;
                 return false;
             });
