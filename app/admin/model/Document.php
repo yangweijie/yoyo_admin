@@ -9,9 +9,9 @@
 
 namespace app\admin\model;
 
-use think\Model as ThinkModel;
 use think\facade\Db;
-use app\cms\model\Field as FieldModel;
+use think\Model as ThinkModel;
+use app\admin\model\Field as FieldModel;
 
 /**
  * 文档模型
@@ -42,7 +42,7 @@ class Document extends ThinkModel
             ->view("admin_user", 'username', 'admin_user.id=cms_document.uid', 'left')
             ->where($map)
             ->order($order)
-            ->paginate();
+            ->paginate(config('app.list_rows'));
         return $data_list;
     }
 

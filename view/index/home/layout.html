@@ -116,6 +116,7 @@
 				</div>
 			</div>
 		</div>
+		{include file="public/footer" /}
 	</div>
 	<!-- End your project here-->
 
@@ -196,6 +197,37 @@
 		});
 	});
 	</script>
+
+	<script type="text/javascript">
+        var url = window.location.pathname + window.location.search;
+        url = url.replace(/(\/(p)\/\d+)|(&p=\d+)|(\/(id)\/\d+)|(&id=\d+)|(\/(group)\/\d+)|(&group=\d+)/, "");
+        var no_pic = '__HOME_IMG__/no-cover.png';
+        (function(){
+            var ThinkPHP = window.Think = {
+                "ROOT"   : "__ROOT__", //当前网站地址
+                "APP"    : "__APP__", //当前项目地址
+                "PUBLIC" : "__PUBLIC__", //项目公共目录地址
+                "DEEP"   : "{:config('route.pathinfo_depr')}", //PATHINFO分割符
+                "MODEL"  : ["{:config('app.url_model')}", "{:config('app.url_case_insensitive')}", "{:config('route.url_html_suffix')}"],
+                "VAR"    : ["{:config('app.VAR_MODULE')}", "{:config('app.VAR_CONTROLLER')}", "{:config('app.VAR_ACTION')}"]
+            }
+        })();
+        $(function(){
+         	//单页高亮
+            $('#nav-menu a').removeClass('current');
+            $('#nav-menu a[href="'+url+'"]').addClass('current');
+            $('#search').submit(function(){
+                var url = '/index/search/'+ $('#search input[name="kw"]').val();
+                location.href = url;
+                return false;
+            });
+
+            //pjax
+            $(document).pjax('[data-pjax] a, a[data-pjax]', '#main',{
+            	dataType:'xml',
+            });
+        })
+    </script>
 
 
 	{block name="script"}{/block}

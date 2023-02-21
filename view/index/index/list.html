@@ -9,7 +9,7 @@ $(function(){
 {volist name="list" id="article"}
 	<article class="post p-3 ml-2 border-gray-300 border-b-2">
 		<h2 class="m-1 text-xl">
-			<a href="{:url('archive/'.$article['id'])}">{$article.title}</a>
+			<a href="{:url('/index.php/archive/'.$article['id'])}">{$article.title}</a>
 		</h2>
 		<ul class="post-meta text-gray-400">
 			<li class="inline-block">作者：<a href="javascript:;">{$article.username}</a></li>

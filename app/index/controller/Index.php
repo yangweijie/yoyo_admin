@@ -2,8 +2,9 @@
 namespace app\index\controller;
 
 use app\BaseController;
-use app\admin\model\Document as DocumentModel;
+use app\admin\model\Document;
 use Clickfwd\Yoyo\Yoyo as yoyoClass;
+use think\db\Where;
 use think\facade\Config;
 use think\facade\Db;
 use think\facade\View;
@@ -37,12 +38,7 @@ class Index extends BaseController
         View::assign('tags', ['测试']);
         View::assign('single', $this->cache['single_list']);
         View::assign('archive', $this->cache['date']);
-    }
-
-    public function index($page = 1)
-    {
-        $vars = [
-            'tab_list'=>[
+        View::assign('tab_list', [
                 [
                     'title' => '首页',
                     'url'   => url('/'),
@@ -56,9 +52,13 @@ class Index extends BaseController
                     'url'=>'http://new-qk.lifves.com/list.php?url=MDNEMyVldXNzaTYyJTAyMDJEMyVyYWV5NjIlOGQ3ZGJhYjFlZmUzLWQxMGItY2I2NC05YTYyLWY5MDVhMzg2RDMlZGlGMyVsaWF0ZWRGMiVhZ2FtRjIlY3BGMiVtb2MubmFraXEuc3BkLmdzdHhkbmpGMiVGMiVBMyVwdHRo',
                 ],
             ]
-        ];
+        );
+    }
+
+    public function index($page = 1)
+    {
         $this->lists($page);
-        return View::fetch('', $vars);
+        return View::fetch('', []);
     }
 
     /* 文档模型列表页 */
@@ -70,7 +70,7 @@ class Index extends BaseController
             $map['cms_document.cid'] = $cid;
         }
         if ($kw = input('get.kw', '', 'trim')) {
-            $map['cms_document.title'] = array('like', "%{$kw}%");
+            $map['cms_document.title'] = ['like', "%{$kw}%"];
             $like_id                   = Db::name('cms_document_article')->where("content like '%{$kw}%'")->column('aid');
             if ($like_id) {
                 $map['cms_document.id'] = $like_id;
@@ -95,10 +95,71 @@ class Index extends BaseController
         // 排序
         $order = 'update_time desc';
         // 数据列表
-        $data_list = DocumentModel::getList($map, $order);
+        $data_list = Document::getList($map, $order);
       
         View::assign('list', $data_list);
         return $data_list;
+    }
+
+    //详情
+    public function detail($id)
+    {
+        $map       = new Where;
+        $map['id'] = ['in', '1,2'];
+        $list      = Document::where($map)->select();
+        // halt($list);
+        /* 标识正确性检测 */
+        if (!($id && is_numeric($id))) {
+            return $this->error('文档ID错误！');
+        }
+
+        /* 获取详细信息 */
+        $info = Document::getOne($id);
+        if (!$info) {
+            return $this->error('未获取到详情信息');
+        }
+        $info['cate_title'] = get_cate_name($info['cid']);
+
+        $tmpl = 'index/detail';
+
+        /* 模板赋值并渲染模板 */
+        View::assign('info', $info);
+        return View::fetch($tmpl);
+    }
+
+    //分类
+    public function category($name)
+    {
+        $cate = Db::name('cms_column')->getByName($name);
+        if (!$cate) {
+            $this->error('错误的分类');
+        }
+        View::assign('cate', $cate);
+        $this->lists(input('get.page', 1), $cate['id']);
+        return View::fetch('index/cate');
+    }
+
+    //归档
+    public function archive($year, $month)
+    {
+        $_GET['month'] = $month;
+        $_GET['year']  = $year;
+        View::assign('year', $year);
+        View::assign('month', $month);
+        $this->lists(input('get.page', 1));
+        return View::fetch('index/archive');
+    }
+
+    //搜索
+    public function search($kw ='')
+    {
+        if (!$kw) {
+            return $this->error('请输入关键字');
+        }
+
+        View::assign('kw', $kw);
+        $this->lists(input('get.page', 1));
+        return View::fetch('index/search');
     }
 
     public function phpinfo()
