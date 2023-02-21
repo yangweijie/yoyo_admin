@@ -217,7 +217,7 @@
             $('#nav-menu a').removeClass('current');
             $('#nav-menu a[href="'+url+'"]').addClass('current');
             $('#search').submit(function(){
-                var url = '/index.php/index/search/'+ $('#search input[name="kw"]').val();
+                var url = '/index.php/search/'+ $('#search input[name="kw"]').val();
                 location.href = url;
                 return false;
             });
