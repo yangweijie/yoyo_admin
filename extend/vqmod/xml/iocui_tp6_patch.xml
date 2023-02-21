@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>THINKPHP Patch</id>
+    <name>本插件仅用于修复TP6+长驻内存运行模式部分DEBUG, 不影响TP升级</name>
+    <version>6.0</version>
+    <vqmver required="true">2.6.0</vqmver>
+    <author>iocui.com</author>
+
+    <file name="vendor/topthink/framework/src/think/route/RuleItem.php" info="解决定义路由含有动态变量时造成大小写敏感问题(已提PR给官方, 待是否合并再移除此替换)">
+        <operation error="skip" info="官方若未合并PR则替换, 否则忽略替换">
+            <ignoreif><![CDATA['~i']]></ignoreif>
+            <search position="before"><![CDATA['~u']]></search>
+            <add><![CDATA[                if ($matchRule[0] && strpos($regex, ')') !== false) {
+                    // 修复路由参数存在动态变量时, URL地址大小写敏感
+                    $url = preg_replace('~' . $matchRule[0] . '~i', $matchRule[0], $url, 1);
+                }]]></add>
+        </operation>
+	</file>
+
+    <file name="vendor/topthink/framework/src/think/cache/Driver.php" info="解决长驻内存运行模式下: Trace调试时缓存信息统计数累加">
+        <operation error="skip">
+            <search position="after" offset="2"><![CDATA[$this->writeTimes;]]></search>
+            <add><![CDATA[
+    public function clearQueryTimes(): void
+    {
+        $this->writeTimes = 0;
+        $this->readTimes = 0;
+    }
+            ]]></add>
+        </operation>
+	</file>
+    <file name="vendor/topthink/think-trace/src/Html.php,vendor/topthink/think-trace/src/Console.php" info="解决长驻内存运行模式下: 强删除缓存文件后DebugTrace报错">
+        <operation error="skip">
+            <search position="replace"><![CDATA[' ( ']]></search>
+            <add><![CDATA[(!is_file($file)?' ( 0KB ) ':' ( ']]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[' KB )']]></search>
+            <add><![CDATA[' KB )')]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[__DIR__ .]]></search>
+            <add><![CDATA[__DIR__.'/../../vendor/topthink/think-trace/src' .]]></add>
+        </operation>
+	</file>
+</modification>

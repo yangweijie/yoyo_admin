@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>VQMOD CORE FOR COMPOSER - DO NOT REMOVE</id>
+    <name>本插件可使得Composer项目所用的依赖库可实现零侵入式修改源代码而不受其依赖版本升级影响</name>
+    <version>6.0.x</version>
+    <vqmver required="true">2.6.0</vqmver>
+    <author>vqmod.com</author>
+
+    <file name="vendor/composer/autoload_real.php" info="Autoload_real file For non OCMod includes/requires">
+        <operation error="skip">
+            <search position="replace" regex="true"><![CDATA[~(\s*)(require|include)(_once)?(\s+|\()__DIR__\s+\.\s+\'(?!VQMod::modCheck\()([^);]+)~]]></search>
+            <add><![CDATA[$1$2$3$4\\VQMod::modCheck(__DIR__.'/../../vendor/composer$5)]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[\dirname(__DIR__)]]></search>
+            <add><![CDATA[\dirname(realpath(__DIR__.'/../../vendor/composer/'))]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[require $file;]]></search>
+            <add><![CDATA[require \VQMod::modCheck($file);]]></add>
+        </operation>
+	</file>
+
+    <file name="vendor/composer/ClassLoader.php" info="ClassLoader file For non OCMod includes/requires">
+        <operation error="skip">
+            <search position="replace"><![CDATA[return $this->classMap[$class];]]></search>
+            <add><![CDATA[return \VQMod::modCheck($this->classMap[$class]); //vqmod-check]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace" index="1,2"><![CDATA[return $file;]]></search>
+            <add><![CDATA[return \VQMod::modCheck($file); //vqmod-check]]></add>
+        </operation>
+	</file>
+
+</modification>

@@ -60,6 +60,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
+            "@php ./extend/vqmod/install/index.php",
             "@php think service:discover",
             "@php think vendor:publish"
         ]
