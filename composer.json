@@ -23,7 +23,7 @@
         "php": ">=7.2.5",
         "topthink/framework": "6.1.2",
         "topthink/think-orm": "3.0",
-        "clickfwd/yoyo": "^0.8.1",
+        "clickfwd/yoyo": "^0.9.0",
         "topthink/think-view": "^1.0",
         "nyholm/psr7": "^1.5",
         "kriswallsmith/buzz": "^1.2",
@@ -64,5 +64,11 @@
             "@php think service:discover",
             "@php think vendor:publish"
         ]
+    },
+    "repositories": {
+        "yoyo": {
+            "type": "path",
+            "url": "../yoyo"
+        }
     }
 }
