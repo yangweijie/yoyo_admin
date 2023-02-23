@@ -303,9 +303,9 @@ function lrc2srt($lrc) {
 
 function htmlentities_and_chinese($html){
     $new = htmlentities( $html, ENT_QUOTES, 'UTF-8' );
-    preg_match_all('/[\x{4e00}-\x{9fff}]+/u', $html, $content);
+    preg_match_all('/[\x{4e00}-\x{9fff}“，”！？、]+/u', $html, $content);
     $string = implode('',$content[0]);
-    $utf8_arr = mb_str_split($string);
+    $utf8_arr = mb_str_split($string)?:[];
     $search = $replace = [];
     foreach($utf8_arr as $char){
         $search[] = $char;
