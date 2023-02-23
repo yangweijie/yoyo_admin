@@ -64,11 +64,5 @@
             "@php think service:discover",
             "@php think vendor:publish"
         ]
-    },
-    "repositories": {
-        "yoyo": {
-            "type": "path",
-            "url": "../yoyo"
-        }
     }
 }
