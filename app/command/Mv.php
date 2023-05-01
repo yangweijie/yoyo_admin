@@ -25,6 +25,9 @@ class Mv extends Command
             ->setDescription('批量转换mp3为mv');
     }
 
+    // https://www.musicenc.com/
+    // https://www.gequbao.com/
+    // www.9ku.com
     protected function execute(Input $input, Output $output)
     {
         set_time_limit(0);
