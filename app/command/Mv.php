@@ -91,8 +91,8 @@ class Mv extends Command
     private function getFFMpegPath(){
         if(IS_WIN){
             return [
-                'ffmpeg.binaries' => 'D:/GreenSoft/ffmpeg-5.1.2-essentials_build/bin/ffmpeg.exe',
-                'ffprobe.binaries' => 'D:/GreenSoft/ffmpeg-5.1.2-essentials_build/bin/ffprobe.exe',
+                'ffmpeg.binaries' => 'D:/GreenSoft/ffmpeg-6.0-full_build/bin/ffmpeg.exe',
+                'ffprobe.binaries' => 'D:/GreenSoft/ffmpeg-6.0-full_build/bin/ffprobe.exe',
             ];
         }else{
             return [
@@ -146,7 +146,9 @@ class Mv extends Command
         $srt_path = str_ireplace([':'], ['\:'], $srt_path);
         $advancedMedia = $ffmpeg->openAdvanced([]);
         $advancedMedia->setInitialParameters(['-loop', '1', '-i', $cover_path, '-i', $mp3_path,
-            '-c:v', 'libx264',
+            // '-vcodec', 'h264_nvenc',
+            '-c:v', 'h264_nvenc',
+            // '-c:v', 'mjpeg',
             '-c:a', 'copy',
             '-filter_complex', "subtitles='{$srt_path}'",
             // '-vf', 'subtitles='.$srt_path,
