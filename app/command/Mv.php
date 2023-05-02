@@ -147,7 +147,7 @@ class Mv extends Command
         $advancedMedia = $ffmpeg->openAdvanced([]);
         $advancedMedia->setInitialParameters(['-loop', '1', '-i', $cover_path, '-i', $mp3_path,
             // '-vcodec', 'h264_nvenc',
-            '-c:v', 'h264_nvenc',
+            '-c:v', 'libx264',
             // '-c:v', 'mjpeg',
             '-c:a', 'copy',
             '-filter_complex', "subtitles='{$srt_path}'",
