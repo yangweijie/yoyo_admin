@@ -89,15 +89,16 @@ class Mv extends Command
     }
 
     private function getFFMpegPath(){
+        $dir = env('ffmpeg.dir', 'D:/GreenSoft/ffmpeg-6.0-full_build');
         if(IS_WIN){
             return [
-                'ffmpeg.binaries' => 'D:/GreenSoft/ffmpeg-6.0-full_build/bin/ffmpeg.exe',
-                'ffprobe.binaries' => 'D:/GreenSoft/ffmpeg-6.0-full_build/bin/ffprobe.exe',
+                'ffmpeg.binaries' => "{$dir}/bin/ffmpeg.exe",
+                'ffprobe.binaries' => "{$dir}/bin/ffprobe.exe",
             ];
         }else{
             return [
-                'ffmpeg.binaries' => '/usr/local/Cellar/ffmpeg/5.1.2/bin/ffmpeg',
-                'ffprobe.binaries' => '/usr/local/Cellar/ffmpeg/5.1.2/bin/ffprobe',
+                'ffmpeg.binaries' => "{$dir}/bin/ffmpeg",
+                'ffprobe.binaries' => "{$dir}/bin/ffprobe",
             ];
         }
     }
