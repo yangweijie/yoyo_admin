@@ -43,7 +43,8 @@
         "symfony/options-resolver": "6.0.19",
         "symfony/string": "6.0.19",
         "symfony/var-exporter": "6.0.19",
-        "zoujingli/think-library": "^6.1"
+        "zoujingli/think-library": "^6.1",
+      "ext-json": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"

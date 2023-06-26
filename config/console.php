@@ -7,5 +7,6 @@ return [
     'commands' => [
         'mv' => 'app\command\Mv',
         'playlist_init'=>'app\command\PlaylistInit',
+        'download_playlist'=>'app\command\DownloadPlayList',
     ],
 ];

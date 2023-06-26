@@ -31,12 +31,10 @@ class DownloadPlayList extends \think\admin\Command
         $playlist = Playlist::find($id);
         $musicAll = json_decode(file_get_contents($playlist['url']), true);
         $new = Musics::new($musicAll, $id);
-        dump($new);
-        die;
         list($count, $total) = [0, count($new)];
-        $dir = public_path().'/uploads/music/'.$id;
+        $dir = public_path().'uploads/music/'.$id;
         if(!is_dir($dir)){
-            mkdir($dir);
+            mkdir($dir,0777, true);
         }
         foreach($new as $item){
             $count++;
@@ -56,12 +54,13 @@ class DownloadPlayList extends \think\admin\Command
                 'name'=>$item['name'],
                 'artist'=>$item['artist'],
                 'url'=>$item['url'],
-                'path'=>$file,
-                'lrc'=>$lrc,
-                'pic'=>$cover,
+                'path'=>$dir.DS.$file,
+                'lrc'=>$dir.DS.$lrc,
+                'pic'=>$dir.DS.$cover,
                 'mp4'=>'',
             ]);
-            $state = is_file($file)?'成功':'失败';
+            $state = is_file($dir.DS.$file)?'成功':'失败';
+            $output->info("下载歌单 {$id} {$item['name']} {$item['artist']} 歌曲{$state}");
             $this->setQueueProgress("下载歌单 {$id} {$item['name']} {$item['artist']} 歌曲{$state}", ''. $count / $total);
         }
         debug('end');
