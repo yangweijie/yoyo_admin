@@ -7,7 +7,6 @@ use app\admin\model\Musics;
 use app\admin\model\Playlist;
 use think\console\Command;
 use think\console\Input;
-use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
 use think\Db;
@@ -20,7 +19,6 @@ class PlaylistInit extends Command
         // 指令配置
         $this->setName('playlist init')
             ->setDescription('初始化歌单')
-            ->addArgument('id', Option::VALUE_REQUIRED, '歌单id',0)
             ->addOption('id', 'i', Option::VALUE_REQUIRED, '歌单id')
             ;
     }
