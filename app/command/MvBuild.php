@@ -34,6 +34,7 @@ class MvBuild extends \think\admin\Command
         list($count, $total) = [0, count($todos)];
         $dir = public_path().'uploads/music/'.$id;
         if($todos){
+            $output->info("歌单 {$id} 有 {$total} 个 MV需要转换");
             $path = $this->getFFMpegPath();
             foreach ($todos as $item){
                 try {
@@ -41,7 +42,7 @@ class MvBuild extends \think\admin\Command
                         debug('item_begin');
                         $mp4 = "{$dir}/{$item['rank']}. {$item['name']}-{$item['artist']}.mp4";
                         $cover = str_ireplace('.mp4', '-max.jpg', $mp4);
-                        $srt = str_ireplace('.lrc', '.srt', $mp4);
+                        $srt = str_ireplace('.mp4', '.srt', $mp4);
                         $target_name = str_ireplace('.mp4', '', $mp4);
                         if(!is_file($cover)){
                             $this->generateCover(['cover'=>$cover, 'mp3'=>$item['path'], 'name'=>"{$item['rank']}. {$item['name']}-{$item['artist']}"]);
@@ -55,7 +56,13 @@ class MvBuild extends \think\admin\Command
                             throw new Exception("歌曲字幕生成失败");
                         }
                         $item->srt = $srt;
-                        $this->generateMv($path, ['cover'=>$cover, 'path'=>$item['path'], 'mp4'=>$mp4, 'srt'=>$srt]);
+                        $this->generateMv($path, [
+                            'cover'=>$cover,
+                            'path'=>$item['path'],
+                            'mp4'=>$mp4, 'srt'=>$srt,
+                            'rank'=>$item['rank'],
+                            'name'=>". {$item['name']}-{$item['artist']}",
+                        ]);
                         if(!is_file($mp4)){
                             throw new Exception("歌曲mv生成失败");
                         }
@@ -63,21 +70,20 @@ class MvBuild extends \think\admin\Command
                         $item->mp4 = $mp4;
                         $item->cost_time = debug('item_begin', 'item_end', 6);
                         $item->save();
-                        $output->info("转换歌单 {$id} {$item['name']} {$item['artist']} 歌曲成功");
                         $this->setQueueProgress("转换歌单 {$id} {$item['name']} {$item['artist']} 歌曲成功", ''. $count / $total);
                     }else{
                         throw new Exception("歌曲文件不存在");
                     }
+                    $count++;
                 }catch (\Exception $e){
                     debug('item_end');
                     $item->cost_time = debug('item_begin', 'item_end', 6);
                     $item->save();
-                    $output->error("转换歌单 {$id} {$item['name']} {$item['artist']} 歌曲失败:". $e->getMessage());
+                    $output->error("转换歌单 {$id} {$item['name']} {$item['artist']} 歌曲失败:".$e->getMessage().PHP_EOL.$e->getTraceAsString());
                     $this->setQueueProgress("转换歌单 {$id} {$item['name']} {$item['artist']} 歌曲失败:". $e->getMessage(), ''. $count / $total);
                 }
             }
         }
-        $output->info("转换 {$count} 个 {$id} 歌单的MV！");
         $this->setQueueSuccess("转换 {$count} 个 {$id} 歌单的MV！");
         debug('end');
         Playlist::where('id', $id)->update(['last_id'=>Musics::where('playlist_id', $id)->max('id')]);
@@ -132,7 +138,7 @@ class MvBuild extends \think\admin\Command
         $mp4_path   = str_ireplace('\\', '/', $todo['mp4']);
         $srt_path   = $todo['srt'];
         if(stripos($srt_path, "'") !== false){
-            $tmp_srt = str_ireplace($todo['name'], (string) time(), $srt_path);
+            $tmp_srt = str_ireplace($todo['name'], '', $srt_path);
             copy($srt_path, $tmp_srt);
             $srt_path = $tmp_srt;
         }

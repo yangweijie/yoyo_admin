@@ -5,3 +5,4 @@
 .env
 /runtime/
 /composer.lock
+/public/uploads/
