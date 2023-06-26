@@ -6,5 +6,6 @@ return [
     // 指令定义
     'commands' => [
         'mv' => 'app\command\Mv',
+        'playlist_init'=>'app\command\PlaylistInit',
     ],
 ];

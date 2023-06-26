@@ -15,6 +15,11 @@
       "email": "zoujingli@qq.com"
     }
   ],
+  "autoload": {
+        "psr-0": {
+            "": "extend/"
+        }
+    },
   "config": {
     "allow-plugins": {
       "zoujingli/think-install": true
