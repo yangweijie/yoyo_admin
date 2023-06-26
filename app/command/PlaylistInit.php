@@ -10,6 +10,7 @@ use think\console\Input;
 use think\console\input\Argument;
 use think\console\input\Option;
 use think\console\Output;
+use think\Db;
 use util\Http;
 
 class PlaylistInit extends Command
@@ -29,6 +30,7 @@ class PlaylistInit extends Command
         // 指令输出
         $output->writeln('歌单初始化');
         $id = $input->getOption('id')?:0;
+        debug('begin');
         if($id){
             $playlist = Playlist::find($id);
             if(!$playlist){
@@ -39,16 +41,28 @@ class PlaylistInit extends Command
             $json = Http::get($playlist['url']);
             $json_arr = json_decode($json, true);
             $now = date('Y-m-d H:i:s');
+            $insert = collect([]);
             foreach ($json_arr as $music){
-                Musics::create(array_merge($music, [
+                $insert->push(array_merge($music, [
                     'playlist_id'=>$id,
                     'type'=>$playlist['type'],
                     'create_time'=>$now,
                     'mp4'=>'-',
                 ]));
+                // Musics::create(array_merge($music, [
+                //     'playlist_id'=>$id,
+                //     'type'=>$playlist['type'],
+                //     'create_time'=>$now,
+                //     'mp4'=>'-',
+                // ]));
             }
+            $insert->chunk(100)->each( function($chunk){
+                \think\facade\Db::connect('music')->table('musics')->insertAll($chunk->toArray());
+            });
             $playlist->last_id = Musics::max('id');
-            $output->info('初始化完成');
+            $playlist->save();
+            debug('end');
+            $output->info('初始化完成共耗时'. debug('begin', 'end', 6).'秒');
         }else{
             $output->error('歌单id未传');
             return 0;
