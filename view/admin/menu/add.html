@@ -3,7 +3,7 @@
 {block name="content"}
 
 <div class="ml-64">
-	{:yoyo_render('text', ['name'=>'module', 'label'=>'所属模块', 'value'=>'admin'])}
+	{:yoyo_render('input', ['name'=>'module', 'label'=>'所属模块', 'value'=>request()->get('module', 'admin')])}
 	{:yoyo_render('select', ['name'=>'pid', 'label'=>'所属节点', 'options'=>$parents])}
 	{:yoyo_render('input', ['name'=>'title', 'label'=>'节点标题','type'=>'text'])}
 	{:yoyo_render('radio', ['name'=>'url_type', 'label'=>'链接类型', 'options'=>['module_admin' => '模块链接(后台)', 'module_home' => '模块链接(前台)', 'link' => '普通链接'], 'value'=>'module_admin', 'inline'=>true])}
@@ -11,9 +11,8 @@
 	{:yoyo_render('input', ['name'=>'params', 'label'=>'参数, 如：a=1&b=2'])}
 	{:yoyo_render('radio', ['name'=>'auto_create', 'label'=>'自动添加子节点 选择【是】则自动添加指定的子节点', 'options'=>['否', '是'], 'value'=>0, 'inline'=>true])}
 	{:yoyo_render('check', ['name'=>'child_node', 'label'=>'子节点 仅上面选项为【是】时起作用', 'options'=>['add' => '新增', 'edit' => '编辑', 'delete' => '删除', 'enable' => '启用', 'disable' => '禁用', 'quickedit' => '快速编辑'], 'value'=>'add,edit,delete,enable,disable,quickedit'])}
-	{:yoyo_render('radio', ['name'=>'url_target', 'label'=>'打开方式', 'options'=>['否', '是'], 'value'=>'_self', 'inline'=>true])}
-	{:yoyo_render('radio', ['name'=>'online_hide', 'label'=>'网站上线后隐藏 关闭开发模式后，则隐藏该菜单节点', 'options'=>['_self' => '当前窗口', '_blank' => '新窗口'], 'value'=>0, 'inline'=>true])}
-
+	{:yoyo_render('radio', ['name'=>'url_target', 'label'=>'打开方式', 'options'=>['_self' => '当前窗口', '_blank' => '新窗口'], 'value'=>'_self', 'inline'=>true])}
+	{:yoyo_render('radio', ['name'=>'online_hide', 'label'=>'网站上线后隐藏 关闭开发模式后，则隐藏该菜单节点', 'options'=>['否', '是'], 'value'=>0, 'inline'=>true])}
 
 	<div class="clear-both mt-12">
 		<button type="submit" class="ajax-post inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" target-form="form-control">提交</button>
