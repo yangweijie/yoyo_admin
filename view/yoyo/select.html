@@ -17,7 +17,7 @@
 		focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" name="{$name}" {if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if} >
 	  	{if $options}
 	  	{foreach $options as $k=>$option } 
-		<option {if $k == $value} selected{/if} value="{$k}">{$option}</option>  
+		<option {if $k == $value} selected{/if} value="{$k}">{$option|raw}</option>
 		{/foreach}
 		{/if}
 	</select>
