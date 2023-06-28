@@ -7,7 +7,7 @@
 	<id>fix float to int param </id>
 	<version>1.0</version>
 	<vqmver>2.X</vqmver>
-	<author>yangweijei</author>
+	<author>yangweijie</author>
 	<file name="vendor/woxiaoyao81/think-image/src/Image.php">
 		<operation info="mb_convert_encoding fix">
 			<search position="replace"><![CDATA[

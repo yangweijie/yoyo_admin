@@ -7,14 +7,14 @@
 	<id>Compacity php8.2 mb_convert_encoding</id>
 	<version>1.0</version>
 	<vqmver>2.X</vqmver>
-	<author>yangweijei</author>
+	<author>yangweijie</author>
 	<file name="vendor/clickfwd/yoyo/src/yoyo/YoyoCompiler.php">
 		<operation info="mb_convert_encoding fix">
 			<search position="replace"><![CDATA[
 			$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 			]]></search>
 			<add><![CDATA[
-		$html = htmlspecialchars_decode(htmlentities_and_chinese($html, ENT_COMPAT, 'UTF-8'));
+			$html = version_compare(PHP_VERSION, '8.2.0') >= 0 ? htmlspecialchars_decode(htmlentities_and_chinese($html, ENT_COMPAT, 'UTF-8')) : mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');;
 			]]></add>
 		</operation>
 	</file>
