@@ -605,6 +605,13 @@ INSERT INTO `onethink_admin_menu` VALUES (432, 425, 'admin', '图标列表', '',
 INSERT INTO `onethink_admin_menu` VALUES (433, 425, 'admin', '更新图标', '', 'module_admin', 'admin/icon/reload', '_self', 0, 0, 0, 100, 0, 1, '');
 INSERT INTO `onethink_admin_menu` VALUES (434, 20, 'user', '快速编辑', '', 'module_admin', 'user/index/quickedit', '_self', 0, 0, 0, 100, 0, 1, '');
 INSERT INTO `onethink_admin_menu` VALUES (435, 67, 'user', '快速编辑', '', 'module_admin', 'user/role/quickedit', '_self', 0, 0, 0, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (801, 0, 'music', '音乐', '', 'module_admin', 'admin/playlist/index', '_self', 0, 1687993963, 1687995484, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (804, 801, 'music', '歌单列表', '', 'module_admin', 'admin/playlist/index', '_self', 0, 1687994790, 1687995392, 1, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (803, 801, 'music', '歌曲列表', '', 'module_admin', 'admin/music/index', '_self', 0, 1687994666, 1687996631, 2, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (805, 5, 'admin', '系统任务', '', 'module_admin', 'admin/queue/index', '_self', 0, 1688070689, 1688072521, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (806, 805, 'admin', '重做', '', 'module_admin', 'admin/queue/redo', '_self', 0, 1688070845, 1688070845, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (807, 805, 'admin', '删除', '', 'module_admin', 'admin/queue/delete', '_self', 0, 1688070910, 1688070910, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (808, 805, 'admin', '测试', '', 'module_admin', 'admin/queue/test', '_self', 0, 1688071018, 1688071018, 100, 0, 1, '');
 
 -- ----------------------------
 -- Table structure for onethink_admin_message
