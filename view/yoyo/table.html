@@ -67,10 +67,16 @@
 							{php}
 							$field_options = $render_column[$field_key]['name'].'_options';
 							{/php}
-							{$$field_options[$column]}
+							{$field_options[$column]}
 							{/case}
 							{case byte}
 							{$column|format_bytes}
+							{/case}
+							{case picture}
+							<img
+								src="{$column}"
+								class="h-20 w-20"
+								alt="" />
 							{/case}
 							{case status}
 							<span class="inline-block py-1.5 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold {$column == 1?'bg-green-600':'bg-yellow-500'} text-white rounded">
