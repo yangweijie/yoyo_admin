@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use think\Model;
+
 class Playlist extends Model
 {
     protected $connection = 'music';

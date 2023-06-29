@@ -4,7 +4,7 @@
 
 <div class="ml-64">
 	{:yoyo_render('input', ['name'=>'module', 'label'=>'所属模块', 'value'=>request()->get('module', 'admin')])}
-	{:yoyo_render('select', ['name'=>'pid', 'label'=>'所属节点', 'options'=>$parents])}
+	{:yoyo_render('select', ['name'=>'pid', 'label'=>'所属节点', 'options'=>$parents, 'value'=>request()->get('pid', 0)])}
 	{:yoyo_render('input', ['name'=>'title', 'label'=>'节点标题','type'=>'text'])}
 	{:yoyo_render('radio', ['name'=>'url_type', 'label'=>'链接类型', 'options'=>['module_admin' => '模块链接(后台)', 'module_home' => '模块链接(前台)', 'link' => '普通链接'], 'value'=>'module_admin', 'inline'=>true])}
 	{:yoyo_render('input', ['name'=>'url_value', 'label'=>'节点链接','type'=>'text'])}
