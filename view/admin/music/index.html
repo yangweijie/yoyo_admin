@@ -1,0 +1,19 @@
+{extend name="base" /}
+
+{block name="content"}
+
+<div class="ml-64">
+
+	{:Yoyo\\yoyo_render('table', [
+		'data'=>[],
+		'model'        => '\\app\\admin\\model\\Musics',
+		'edit'         => false,
+		'delete'       => false,
+		'list_rows'    => 10,
+		'column_width' => 'fixed',
+		'search_keys'  => ['name', 'artist', 'url'],
+	])}
+
+</div>
+
+{/block}
