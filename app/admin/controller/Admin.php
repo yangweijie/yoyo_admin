@@ -6,6 +6,9 @@ use app\admin\model\Menu as MenuModel;
 use app\admin\model\Module as ModuleModel;
 use app\admin\model\Icon as IconModel;
 use app\admin\model\Role as RoleModel;
+use Exception;
+use think\admin\service\QueueService;
+use think\exception\HttpResponseException;
 use think\facade\Cache;
 use think\facade\Db;
 use think\facade\App;
@@ -99,7 +102,7 @@ class Admin extends BaseController
             // 使用模型
             try {
                 $Model = App::model($table);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->error('找不到模型：'.$table);
             }
         } else {
@@ -378,4 +381,29 @@ class Admin extends BaseController
             $this->error('操作失败');
         }
     }
+
+	    /**
+     * 创建异步任务并返回任务编号
+     * @param string $title 任务名称
+     * @param string $command 执行内容
+     * @param integer $later 延时执行时间
+     * @param array $data 任务附加数据
+     * @param integer $rscript 任务类型(0单例,1多例)
+     * @param integer $loops 循环等待时间
+     */
+    protected function _queue(string $title, string $command, int $later = 0, array $data = [], int $rscript = 0, int $loops = 0)
+    {
+        try {
+            $queue = QueueService::register($title, $command, $later, $data, $rscript, $loops);
+            $this->success(lang('创建任务成功！'), '', $queue->code);
+        } catch (Exception $exception) {
+            $code = $exception->getData();
+            if (is_string($code) && stripos($code, 'Q') === 0) {
+                $this->success(lang('任务已经存在，无需再次创建！'), '', $code);
+            } else {
+				trace_file($exception);
+                $this->error($exception->getMessage());
+            }
+        }
+	}
 }

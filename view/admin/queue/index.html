@@ -3,7 +3,21 @@
 {block name="content"}
 
 <div class="ml-64">
+	{if isset($iswin) and ($iswin or php_sapi_name() eq 'cli')}
+	<button data-load='{:url("admin/api.queue/start")}' class='layui-btn layui-btn-sm layui-btn-primary'>开启服务</button>
+	<button data-load='{:url("admin/api.queue/stop")}' class='layui-btn layui-btn-sm layui-btn-primary'>关闭服务</button>
+	{/if}
 
+	<button data-table-id="QueueTable" data-queue='{:admin_url("test")}' class='layui-btn layui-btn-sm layui-btn-primary'>定时清理</button>
+
+	<div class="think-box-notify">
+		<b>服务状态：</b><b class="mr-5" data-queue-message><span class="color-desc">检查中</span></b>
+		<b data-tips-text="点击可复制【服务启动指令】" class="layui-icon pointer margin-right-20" data-copy="{$command|default=''}">&#xe60e;</b>
+		<b>任务统计：</b>待处理<b class="color-text" data-extra="pre">{$total.pre|default=0}</b> 个任务，
+		处理中 <b class="text-primary" data-extra="dos">{$total.dos|default=0}</b> 个任务，
+		已完成 <b class="text-success" data-extra="oks">{$total.oks|default=0}</b> 个任务，
+		已失败 <b class="text-danger" data-extra="ers">{$total.ers|default=0}</b> 个任务。
+	</div>
 	{:Yoyo\\yoyo_render('table', [
 		'data'=>[],
 		'model'        => '\\app\\admin\\model\\Queue',
@@ -11,9 +25,13 @@
 		'delete'       => true,
 		'list_rows'    => -1,
 		'column_width' => 'fixed',
-		'search_keys'  => ['title', 'url', 'type'],
+		'search_keys'  => ['title', 'code'],
 	])}
 
 </div>
 
+{/block}
+
+{block name="script"}
+<script>jQuery('[data-queue-message]').load('{:admin_url("status")}');</script>
 {/block}

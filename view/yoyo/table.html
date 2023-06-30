@@ -38,7 +38,9 @@
 							</th>
 							{/if}
 							{volist name="render_column" id="column"}
+							{neq name="column.type" value="hidden"}
 							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-{$min?2:4} text-left {if $border} border-r{/if}">{$column.title?? $column.name}</th>
+							{/neq}
 							{/volist}
 							{if $edit && $delete}
 							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-{$min?2:4} text-left {if $border} border-r{/if}">操作</th>
@@ -58,10 +60,11 @@
 							</td>
 							{/if}
 							{volist name="row" id="column"}
-							<td class="table-cell px-6 py-{$min?2:4} whitespace-nowrap text-sm font-light text-gray-900 {if $border} border-r{/if}">
 							{php}
 							$field_key = array_search($key, array_column($render_column, 'name'));
 							{/php}
+							{neq name="render_column[$field_key]['type']" value="hidden"}
+							<td class="table-cell px-6 py-{$min?2:4} whitespace-nowrap text-sm font-light text-gray-900 {if $border} border-r{/if}">
 							{switch render_column[$field_key]['type']}
 							{case label}
 							{php}
@@ -83,9 +86,12 @@
 							{$column == 1? '启用' : '禁用'}
 							</span>
 							{/case}
+							{case hidden}
+							{/case}
 							{default /}{$column|raw}
 							{/switch}
 							</td>
+							{/neq}
 							{/volist}
 							{if $edit && $delete}
 							<td>
@@ -118,9 +124,11 @@
 					<thead class="{$theader_color} border-b">
 						<tr>
 							{volist name="render_column" id="column" }
+							{neq name="$column.type" value="hidden"}
 							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-{$min?2:4} text-left {if $border} border-r{/if}">
 								{$column.title?? $column.name}
 							</th>
+							{/neq}
 							{/volist}
 						</tr>
 					</thead>
@@ -130,7 +138,9 @@
 						<tr class="{if $striped}{if $mod ==0} bg-white {else /} bg-gray-100 {/if}{else /} bg-white {/if}
 						border-b {if $border} border-r{/if}">
 							{volist name="row" id="column"}
+							{neq name="$column.type" value="hidden"}
 							<td class="px-6 py-{$min?2:4} whitespace-nowrap text-sm font-light text-gray-900 {if $border} border-r{/if}">{$column}</td>
+							{/neq}
 							{/volist}
 						</tr>
 						{/volist}
