@@ -313,3 +313,27 @@ function htmlentities_and_chinese($html){
     }
     return str_ireplace($search, $replace, $new);
 }
+
+function safe_name ($name){
+    return str_ireplace([
+        '\\',
+        '/',
+        ':',
+        '*',
+        '?',
+        '"',
+        '<',
+        '>',
+        '|'
+    ], [
+        '_',
+        '_',
+        '_',
+        '_',
+        '_',
+        '_',
+        '_',
+        '_',
+        '_'
+    ], $name);
+}

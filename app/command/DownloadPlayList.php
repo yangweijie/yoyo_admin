@@ -39,9 +39,7 @@ class DownloadPlayList extends \think\admin\Command
         foreach($new as $item){
             $count++;
             $name = "{$item['name']}-{$item['artist']}";
-            $name = str_replace('/', '-', $name);
-            $name = str_replace('?', '', $name);
-            $name = str_replace('\\', '', $name);
+            $name = safe_name($name);
             $file = "{$name}.mp3";
             $cover = "{$name}.jpg";
             $lrc = "{$name}.lrc";

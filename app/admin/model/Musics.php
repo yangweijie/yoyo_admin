@@ -30,7 +30,10 @@ class Musics extends Model
 
 	// 获取新的需下载至数据库的列表
     public static function new($all, $playlist_id){
-        $exist = self::where('playlist_id', $playlist_id)->where('mp4', '-')->column(['concat(name, "-", artist)'=>'title'])?:[];
+        $exist = self::where('playlist_id', $playlist_id)->where(function($query){
+        	$query->where('mp4', '-');
+        	$query->whereOr('mp4', '');
+        })->column(['concat(name, "-", artist)'=>'title'])?:[];
         if($exist){
             return collect($all)->filter(function($item)use($exist){
                 return !in_array("{$item['name']}-{$item['artist']}", $exist);
