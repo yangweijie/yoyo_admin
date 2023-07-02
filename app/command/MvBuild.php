@@ -40,7 +40,7 @@ class MvBuild extends \think\admin\Command
                 try {
                     if(is_file($item['path'])){
                         debug('item_begin');
-                        $mp4 = "{$dir}/{$item['rank']}. {$item['name']}-{$item['artist']}.mp4";
+                        $mp4 = "{$dir}/{$item['rank']}. ".safe_name("{$item['name']}-{$item['artist']}.mp4");
                         $cover = str_ireplace('.mp4', '-max.jpg', $mp4);
                         $srt = str_ireplace('.mp4', '.srt', $mp4);
                         $target_name = str_ireplace('.mp4', '', $mp4);
