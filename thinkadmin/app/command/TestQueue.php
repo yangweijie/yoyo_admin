@@ -19,7 +19,7 @@ class TestQueue extends \think\admin\Command
     {
         for($i = 0; $i< 60;$i++){
             sleep(1);
-            $this->setQueueProgress("同步第{$i}步", ''. $i / 60);
+            $this->setQueueProgress("同步第{$i}步", ''. $i / 60 * 100);
         }
         $this->setQueueSuccess("测试完毕");
     }
