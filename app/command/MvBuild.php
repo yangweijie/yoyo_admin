@@ -31,16 +31,21 @@ class MvBuild extends \think\admin\Command
         $todos = $new->filter(function($item){
             return $item['mp4'] == '';
         });
+        if(!defined('DS')){
+            define('DS', DIRECTORY_SEPARATOR);
+        }
         list($count, $total) = [0, count($todos)];
-        $dir = public_path().'uploads/music/'.$id;
+        $dir = public_path().'uploads'.DS.'music'.DS.$id;
         if($todos){
             $output->info("歌单 {$id} 有 {$total} 个 MV需要转换");
             $path = $this->getFFMpegPath();
             foreach ($todos as $item){
+                $item['path'] = str_ireplace('\\', '/', $item['path']);
                 try {
                     if(is_file($item['path'])){
                         debug('item_begin');
-                        $mp4 = "{$dir}/{$item['rank']}. ".safe_name("{$item['name']}-{$item['artist']}.mp4");
+                        $mp4 = "{$dir}".DIRECTORY_SEPARATOR."{$item['rank']}. ".safe_name("{$item['name']}-{$item['artist']}.mp4");
+                        $mp4 = str_ireplace('\\', '/', $mp4);
                         $cover = str_ireplace('.mp4', '-max.jpg', $mp4);
                         $srt = str_ireplace('.mp4', '.srt', $mp4);
                         $target_name = str_ireplace('.mp4', '', $mp4);
@@ -51,15 +56,18 @@ class MvBuild extends \think\admin\Command
                             }
                         }
                         $item->cover = $cover;
-                        $this->lrc2srt($item['lrc'], $srt);
                         if(!is_file($srt)){
-                            throw new Exception("歌曲字幕生成失败");
+                            $this->lrc2srt($item['lrc'], $srt);
+                            if(!is_file($srt)){
+                                throw new Exception("歌曲字幕生成失败");
+                            }
                         }
                         $item->srt = $srt;
                         $this->generateMv($path, [
                             'cover'=>$cover,
                             'path'=>$item['path'],
-                            'mp4'=>$mp4, 'srt'=>$srt,
+                            'mp4'=>$mp4, 
+                            'srt'=>$srt,
                             'rank'=>$item['rank'],
                             'name'=>". {$item['name']}-{$item['artist']}",
                         ]);

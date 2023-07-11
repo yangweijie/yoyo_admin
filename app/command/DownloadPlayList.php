@@ -32,7 +32,7 @@ class DownloadPlayList extends \think\admin\Command
         $musicAll = json_decode(file_get_contents($playlist['url']), true);
         $new = Musics::new($musicAll, $id);
         list($count, $total) = [0, count($new)];
-        $dir = public_path().'uploads/music/'.$id;
+        $dir = public_path().'uploads'.DS.'music'.DS.$id;
         if(!is_dir($dir)){
             mkdir($dir,0777, true);
         }
@@ -52,9 +52,9 @@ class DownloadPlayList extends \think\admin\Command
                 'name'=>$item['name'],
                 'artist'=>$item['artist'],
                 'url'=>$item['url'],
-                'path'=>$dir.DS.$file,
-                'lrc'=>$dir.DS.$lrc,
-                'pic'=>$dir.DS.$cover,
+                'path'=>str_ireplace('\\', '/', $dir.DS.$file),
+                'lrc'=>str_ireplace('\\', '/', $dir.DS.$lrc),
+                'pic'=>str_ireplace('\\', '/', $dir.DS.$cover),
                 'mp4'=>'',
             ]);
             $state = is_file($dir.DS.$file)?'成功':'失败';
