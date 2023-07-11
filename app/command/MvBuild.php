@@ -146,7 +146,7 @@ class MvBuild extends \think\admin\Command
         $mp4_path   = str_ireplace('\\', '/', $todo['mp4']);
         $srt_path   = $todo['srt'];
         if(stripos($srt_path, "'") !== false){
-            $tmp_srt = str_ireplace($todo['name'], '', $srt_path);
+            $tmp_srt = str_ireplace(safe_name($todo['name']), (string)time(), $srt_path);
             copy($srt_path, $tmp_srt);
             $srt_path = $tmp_srt;
         }
