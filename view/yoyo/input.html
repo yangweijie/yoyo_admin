@@ -1,22 +1,18 @@
-<div class="form-floating mb-3 xl:w-96">
-  	<input type="{$type}" 
-      name="{$name}"
-      class="form-control
-      block
-      w-full
-      px-3
-      py-1.5
-      {$size}
-      font-normal
-      text-gray-700
-      bg-white bg-clip-padding
-      border border-solid border-gray-300
-      rounded
-      transition
-      ease-in-out
-      m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="{$id}" value="{$value}" {if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if} />
-    {if $type !='hidden'}
-    <label for="{$id}" class="text-gray-700">{$label}</label>
-    {/if}
+<div class="relative mb-3 xl:w-96" data-te-input-wrapper-init>
+<input
+	type="{$type}"
+	name="{$name}"
+	class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[{$size}] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+	id="{$name}"
+	value="{$value}"
+	placeholder="{$label}"
+	{if $required} required{/if} {if $disabled} disabled {/if} {if $readonly} readonly {/if}
+/>
+{if $type !='hidden'}
+<label
+	for="{$name}"
+	class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[{$size}] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+>{$label}
+</label>
+{/if}
 </div>

@@ -5,12 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{block name="title"}{$title|default='title'}{/block}</title>
 	{:Yoyo\\yoyo_scripts()}
-	<link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+	<link rel="stylesheet" href="/static/tw/css/font.css" />
     <!-- Tailwind Elements CSS -->
-    <link rel="stylesheet" href="/static/tw/css/index.min.css" />
+    <link rel="stylesheet" href="/static/tw/css/tw-elements.min.css" />
     <link rel="stylesheet" href="/static/js/viewer/viewer.min.css" />
     <link rel="stylesheet" href="/static/js/sweetalert/sweetalert.min.css" />
     <link rel="stylesheet" href="/static/js/jquery-tags-input/jquery.tagsinput.min.css" />
@@ -23,13 +20,17 @@
     <link rel="stylesheet" type="text/css" href="/static/css/customer.css" />
 	<script>
 	  tailwind.config = {
-	    theme: {
-	      extend: {
-	        fontFamily: {
-	          sans: ['Inter', 'sans-serif'],
-	        },
-	      }
-	    }
+		  darkMode: "class",
+		  theme: {
+			  fontFamily: {
+				  sans: ["Roboto", "sans-serif"],
+				  body: ["Roboto", "sans-serif"],
+				  mono: ["ui-monospace", "monospace"],
+			  },
+		  },
+		  corePlugins: {
+			  preflight: false,
+		  },
 	  }
 	</script>
 </head>
@@ -51,14 +52,21 @@
     <!-- End your project here-->
  
 	{load href="/static/js/jquery-3.6.1.min.js" /}
-	{load href="/static/tw/js/index.min.js" /}
+	{load href="/static/tw/js/tw-elements.umd.min.js" /}
 	{load href="/static/js/viewer/viewer.min.js" /}
 	{load href="/static/js/sweetalert/sweetalert.min.js" /}
 	{load href="/static/js/coco-message.min.js" /}
 	{load href="/static/js/jquery-tags-input/jquery.tagsinput.min.js" /}
 	{load href="/static/js/wang-editor/js/index.js" /}
 	{load href="/static/js/nengjj.js" /}
+<!--	<script>-->
+<!--		import {-->
+<!--			Input,-->
+<!--			initTE,-->
+<!--		} from "tw-elements";-->
 
+<!--		initTE({ Input });-->
+<!--	</script>-->
 	<script src="/static/js/common.js"></script>
 	<script>
 	const { createEditor, createToolbar } = window.wangEditor;
