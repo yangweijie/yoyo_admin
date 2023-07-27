@@ -5,6 +5,7 @@ namespace app\yoyo;
 use app\admin\model\Module;
 use app\common\paginator\driver\YoyoArray;
 use Clickfwd\Yoyo\Component;
+use think\Exception;
 use think\helper\Str;
 
 class Table extends Component
@@ -45,7 +46,7 @@ class Table extends Component
 	public function mount(){
 		$this->request = request();
 		if(empty($this->model) && empty($this->data)){
-			throw new \Exception("数据未空");
+			throw new \Error("数据未空");
 		}
 		if(class_exists($this->model)){
 			$model = new $this->model;
@@ -83,6 +84,8 @@ class Table extends Component
 						$appends[] = $value;
 					}
 				}
+			}else{
+				throw new \Error("模型未定义 renderColumns 方法");
 			}
 			if(!$this->data->isEmpty()){
 				foreach ($this->data as $key => $row) {
@@ -102,6 +105,8 @@ class Table extends Component
 					$this->data[$key] = $tempRow;
 				}
 			}
+		}else{
+			throw new \Error("{$this->model} 模型不存在");
 		}
 	}
 

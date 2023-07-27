@@ -8,8 +8,8 @@ var yoyo = function () {
      */
     var ajaxPost = function () {
         jQuery(document).delegate('.ajax-post', 'click', function () {
-            var msg, self   = jQuery(this), ajax_url = self.attr("href") || self.data("url");
-            var target_form = self.attr("target-form");
+            var msg, self   = jQuery(this), ajax_url = self.attr('href') || self.data('url');
+            var target_form = self.attr('target-form');
             var text        = self.data('tips');
             var title       = self.data('title') || '确定要执行该操作吗？';
             var confirm_btn = self.data('confirm') || '确定';
@@ -19,7 +19,6 @@ var yoyo = function () {
                 form = jQuery('.' + target_form);
             }
             var form_data   = form.serialize();
-
             if ("submit" === self.attr("type") || ajax_url) {
                 // 不存在“.target-form”元素则返回false
                 if (undefined === form.get(0)) return false;
@@ -75,7 +74,6 @@ var yoyo = function () {
                                         return self.hasClass("no-refresh") ? false : void(res.url && !self.hasClass("no-forward") ? location.href = res.url : location.reload());
                                     }, 1500);
                                 } else {
-									alert(333);
                                     jQuery(".reload-verify").length > 0 && jQuery(".reload-verify").click();
                                     tips(msg, 'danger');
                                     setTimeout(function () {
@@ -98,7 +96,6 @@ var yoyo = function () {
                                     }, 2000);
                                 }
                             }).fail(function (res) {
-								alert(444);
                                 pageLoader('hide');
                                 tips('服务器内部错误~', 'danger');
                                 self.attr("autocomplete", "on").prop("disabled", false);
@@ -206,7 +203,6 @@ var yoyo = function () {
                         }, function () {
                             pageLoader();
                             self.attr("autocomplete", "off").prop("disabled", true);
-                            form_data = form.find("input,select,textarea").serialize();
 
                             // 发送ajax请求
                             jQuery.post(ajax_url, form_data, {}, 'json').done(function(res,  textStatus, jqXHR) {
@@ -266,11 +262,9 @@ var yoyo = function () {
                         });
                         return false;
                     } else {
-                        form_data = form.find("input,select,textarea").serialize();
                         self.attr("autocomplete", "off").prop("disabled", true);
                     }
                 }
-
                 // 直接发送ajax请求
                 pageLoader();
                 jQuery.post(ajax_url, form_data, {}, 'json').done(function(res, textStatus, jqXHR) {

@@ -3,13 +3,8 @@
 {block name="content"}
 
 <div class="ml-64">
-    {:yoyo_render('wang_editor', [
-      ])}
-</div>
 
-{/block}
-
-{:Yoyo\\yoyo_render('table', [
+    {:Yoyo\\yoyo_render('table', [
     'data'=>[],
     'model'        => '\\app\\admin\\model\\User',
     'edit'         => true,
@@ -18,3 +13,9 @@
     'column_width' => 'fixed',
     'search_keys'  => ['username', 'nickname'],
 ])}
+
+</div>
+
+{/block}
+
+{:yoyo_render('wang_editor', [ ])}

@@ -35,23 +35,23 @@
                       " id="form_config-{$key}-tab" role="tab" aria-controls="form_config-{$key}"
                         aria-selected="true">{$item.title}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link
-                        block
-                        font-medium
-                        text-xs
-                        leading-tight
-                        uppercase
-                        border-x-0 border-t-0 border-b-2 border-transparent
-                        px-6
-                        py-3
-                        my-2
-                        hover:border-transparent hover:bg-gray-100
-                        focus:border-transparent {if $tab_nav['curr_tab'] == 'module-sort'}active{/if}" 
-                            href="{:url('', ['group' => 'module-sort'])}">模块排序</a>
-                    </li>
                     {/volist}
-                 </ul>
+<!--					<li class="nav-item">-->
+<!--						<a class="nav-link-->
+<!--                        block-->
+<!--                        font-medium-->
+<!--                        text-xs-->
+<!--                        leading-tight-->
+<!--                        uppercase-->
+<!--                        border-x-0 border-t-0 border-b-2 border-transparent-->
+<!--                        px-6-->
+<!--                        py-3-->
+<!--                        my-2-->
+<!--                        hover:border-transparent hover:bg-gray-100-->
+<!--                        focus:border-transparent {if $tab_nav['curr_tab'] == 'module-sort'}active{/if}"-->
+<!--						   href="{:url('', ['group' => 'module-sort'])}">模块排序</a>-->
+<!--					</li>-->
+				</ul>
                 {/notempty}
                 <div class="block-content tab-content">
                     <div class="tab-pane active">
@@ -96,7 +96,7 @@
                         {/notempty}
 
                         {notempty name="modules"}
-                        <form action="{:url('')}" method="post" name="sort-form" class="sort-form">
+                        <form action="{:url('save')}" method="post" name="sort-form" class="sort-form">
                             <button title="保存" type="submit" class="btn btn-success push-10 ajax-post" target-form="sort-form">保存排序</button>
                             <div class="row">
                                 <div class="col-md-12">
@@ -133,7 +133,7 @@
         // 保存节点
         $('#save').click(function(){
             yoyo.loading();
-            $.post("{:url('save')}", {menus: $('#menu_list').nestable('serialize')}, function(data) {
+            $.post("{:admin_url('save')}", {menus: $('#menu_list').nestable('serialize')}, function(data) {
                 yoyo.loading('hide');
                 if (data.code) {
                     $('#save').addClass('pointer-events-none opacity-60');

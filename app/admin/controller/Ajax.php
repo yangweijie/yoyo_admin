@@ -9,7 +9,6 @@
 
 namespace app\admin\controller;
 
-use app\common\controller\Common;
 use app\admin\model\Menu as MenuModel;
 use app\admin\model\Attachment as AttachmentModel;
 use think\facade\Cache;
@@ -19,7 +18,7 @@ use think\facade\Db;
  * 用于处理ajax请求的控制器
  * @package app\admin\controller
  */
-class Ajax extends Common
+class Ajax extends Admin
 {
     /**
      * 获取联动数据

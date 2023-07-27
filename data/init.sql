@@ -605,6 +605,13 @@ INSERT INTO `onethink_admin_menu` VALUES (432, 425, 'admin', '图标列表', '',
 INSERT INTO `onethink_admin_menu` VALUES (433, 425, 'admin', '更新图标', '', 'module_admin', 'admin/icon/reload', '_self', 0, 0, 0, 100, 0, 1, '');
 INSERT INTO `onethink_admin_menu` VALUES (434, 20, 'user', '快速编辑', '', 'module_admin', 'user/index/quickedit', '_self', 0, 0, 0, 100, 0, 1, '');
 INSERT INTO `onethink_admin_menu` VALUES (435, 67, 'user', '快速编辑', '', 'module_admin', 'user/role/quickedit', '_self', 0, 0, 0, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (801, 0, 'music', '音乐', '', 'module_admin', 'admin/playlist/index', '_self', 0, 1687993963, 1687995484, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (804, 801, 'music', '歌单列表', '', 'module_admin', 'admin/playlist/index', '_self', 0, 1687994790, 1687995392, 1, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (803, 801, 'music', '歌曲列表', '', 'module_admin', 'admin/music/index', '_self', 0, 1687994666, 1687996631, 2, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (805, 5, 'admin', '系统任务', '', 'module_admin', 'admin/queue/index', '_self', 0, 1688070689, 1688072521, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (806, 805, 'admin', '重做', '', 'module_admin', 'admin/queue/redo', '_self', 0, 1688070845, 1688070845, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (807, 805, 'admin', '删除', '', 'module_admin', 'admin/queue/delete', '_self', 0, 1688070910, 1688070910, 100, 0, 1, '');
+INSERT INTO `onethink_admin_menu` VALUES (808, 805, 'admin', '测试', '', 'module_admin', 'admin/queue/test', '_self', 0, 1688071018, 1688071018, 100, 0, 1, '');
 
 -- ----------------------------
 -- Table structure for onethink_admin_message
@@ -5802,5 +5809,36 @@ INSERT INTO `onethink_test_c` VALUES (2, '', ':id', '2017-01-21 12:18:44');
 INSERT INTO `onethink_test_c` VALUES (3, '', ':title', '2017-01-21 12:19:02');
 INSERT INTO `onethink_test_c` VALUES (4, '111', ':desc', '2017-01-21 12:26:03');
 INSERT INTO `onethink_test_c` VALUES (5, '111', ':desc', '2017-01-21 14:34:45');
+
+
+-- ----------------------------
+-- Table structure for onethink_system_queue
+-- ----------------------------
+DROP TABLE IF EXISTS `onethink_system_queue`;
+CREATE TABLE `onethink_system_queue`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '任务编号',
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
+  `command` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '执行指令',
+  `exec_pid` bigint(20) NULL DEFAULT 0 COMMENT '执行进程',
+  `exec_data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '执行参数',
+  `exec_time` bigint(20) NULL DEFAULT 0 COMMENT '执行时间',
+  `exec_desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '执行描述',
+  `enter_time` decimal(20, 4) NULL DEFAULT 0.0000 COMMENT '开始时间',
+  `outer_time` decimal(20, 4) NULL DEFAULT 0.0000 COMMENT '结束时间',
+  `loops_time` bigint(20) NULL DEFAULT 0 COMMENT '循环时间',
+  `attempts` bigint(20) NULL DEFAULT 0 COMMENT '执行次数',
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '最新消息',
+  `rscript` int(1) NULL DEFAULT 1 COMMENT '任务类型(0单例,1多例)',
+  `status` int(1) NULL DEFAULT 1 COMMENT '任务状态(1新任务,2处理中,3成功,4失败)',
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_system_queue_code`(`code`) USING BTREE,
+  INDEX `idx_system_queue_title`(`title`) USING BTREE,
+  INDEX `idx_system_queue_status`(`status`) USING BTREE,
+  INDEX `idx_system_queue_rscript`(`rscript`) USING BTREE,
+  INDEX `idx_system_queue_create_at`(`create_at`) USING BTREE,
+  INDEX `idx_system_queue_exec_time`(`exec_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

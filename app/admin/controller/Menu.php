@@ -118,7 +118,7 @@ class Menu extends Admin
         return View::fetch('', [
             'title'   => '新增节点',
             'group'   => input('group', $module),
-            'parents' => MenuModel::getMenuTree(0, '', 'admin'),
+            'parents' => MenuModel::getMenuTree(0, '', $module),
         ]);
     }
 
@@ -180,7 +180,7 @@ class Menu extends Admin
 
         return View::fetch('', [
             'title'     => '编辑节点',
-            'parents'   => MenuModel::getMenuTree(0, '', 'admin'),
+            'parents'   => MenuModel::getMenuTree(0, '', $info['module']),
             'form_data' => $info,
         ]);
     }
