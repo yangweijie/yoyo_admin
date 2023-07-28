@@ -44,12 +44,6 @@
 	{/block}
 
 
-	<!-- Start your project here-->
-    <div class="mx-auto">
-	{block name="content"}
-	{/block}
-    </div>
-    <!-- End your project here-->
  
 	{load href="/static/js/jquery-3.6.1.min.js" /}
 	{load href="/static/tw/js/tw-elements.umd.min.js" /}
@@ -59,14 +53,6 @@
 	{load href="/static/js/jquery-tags-input/jquery.tagsinput.min.js" /}
 	{load href="/static/js/wang-editor/js/index.js" /}
 	{load href="/static/js/nengjj.js" /}
-<!--	<script>-->
-<!--		import {-->
-<!--			Input,-->
-<!--			initTE,-->
-<!--		} from "tw-elements";-->
-
-<!--		initTE({ Input });-->
-<!--	</script>-->
 	<script src="/static/js/common.js"></script>
 	<script>
 	const { createEditor, createToolbar } = window.wangEditor;
@@ -136,7 +122,12 @@
     });
 	</script>
 
-	
+	<!-- Start your project here-->
+	<div class="mx-auto">
+		{block name="content"}
+		{/block}
+	</div>
+	<!-- End your project here-->
 	{block name="script"}{/block}
 </body>
 </html>

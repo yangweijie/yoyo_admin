@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 
+use Clickfwd\Yoyo\Yoyo as yoyoClass;
 use think\facade\Cache;
 use think\facade\Env;
 use think\facade\View;
@@ -45,4 +46,8 @@ class Index extends Admin
             $this->error('请在系统设置中选择需要清除的缓存类型');
         }
     }
+
+	public function yoyo(){
+		return (yoyoClass::getInstance())->update();
+	}
 }

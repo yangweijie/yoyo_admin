@@ -3,7 +3,16 @@
 {block name="content"}
 
 <div class="text-center bg-white border-t border-l border-r rounded-5  ">
-	欢迎
+	{:Yoyo\\yoyo_render('button', [
+		'clickEvent'=>{literal}function(){
+			trace(2322);
+		}
+		{/literal}
+	])}
+
+	{:Yoyo\\yoyo_render('model', [
+		'show'=>false,
+	])}
 </div>
 
 

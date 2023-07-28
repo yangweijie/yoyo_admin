@@ -20,6 +20,7 @@ class Button extends Component
 	public $ripple      = false;
 	public $outline     = false;
 	public $disabled    = false;
+	public $clickEvent = null;
 	public $extra_attrs = '';
 
 	private $types = [
@@ -64,5 +65,14 @@ class Button extends Component
 			'text_color'  => $this->text_color,
 			'hover_color' => $this->hover_color,
 		]);
+	}
+
+	public function click(){
+		trace('clicked');
+		trace($this->clickEvent);
+		trace(gettype($this->clickEvent));
+		if(isset($this->clickEvent) && gettype($this->clickEvent) == 'Closure'){
+			$this->clickEvent();
+		}
 	}
 }

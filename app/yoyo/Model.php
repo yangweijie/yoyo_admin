@@ -15,11 +15,18 @@ class Model extends Component
 	public $centered   = false;
 	public $size       = 'lg';
 	public $fullscreen = false; // modal-fullscreen
+	public $show = false;
+
+	protected $listeners = ['modelShow' => 'show'];
 
 	public function render()
 	{
 		return (String) $this->view('model', [
 			'id' => $this->getComponentId(),
 		]);
+	}
+
+	public function show(){
+		$this->show = true;
 	}
 }

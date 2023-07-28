@@ -24,7 +24,7 @@ class YoyoInit
     {
         $yoyo = new Yoyo();
         $yoyo->configure([
-          'url'         => '/index.php/index/yoyo',
+          'url'         => request()->baseFile().'/index/yoyo',
           'scriptsPath' => '/static/js/',
           'namespace'   => 'app\\yoyo\\',
           'htmx'        => '/static/js/htmx.js',
