@@ -64,13 +64,13 @@ return [
             // 数据库类型
             'type'            => 'mysql',
             // 服务器地址
-            'hostname'        => 'db4free.net',
+            'hostname'        => 'rm-uf61022e34wf115ydfo.mysql.rds.aliyuncs.com',
             // 数据库名
             'database'        => 'jay_music',
             // 用户名
-            'username'        => 'jaylabs',
+            'username'        => 'pizhi',
             // 密码
-            'password'        => 'ya123456',
+            'password'        => 'Qwer1234!',
             // 端口
             'hostport'        => '3306',
             // 数据库连接参数
